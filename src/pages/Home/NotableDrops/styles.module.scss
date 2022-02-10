@@ -1,0 +1,32 @@
+@import 'src/styles/helpers';
+
+.notableDrops {
+  @include container;
+  margin-top: 88px;
+}
+
+.drops {
+  @include flexbox(normal, space-between);
+  flex-wrap: wrap;
+
+  margin: 40px -15px 0;
+}
+
+.drop {
+  @include flexbox(normal, center);
+  width: 33.33333%;
+
+  @include forDesktopMiddle {
+    width: 50%;
+    padding-bottom: 15px;
+  }
+
+  @include forTablet {
+    width: 100%;
+  }
+  padding: 0 15px;
+}
+
+.noItems {
+  margin-top: 16px;
+}

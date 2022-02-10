@@ -4,11 +4,12 @@
   position: relative;
   background-color: $color-primary;
   background-size: cover;
-  padding: 52px 0;
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: 50%;
   animation: up-to-down 80s linear infinite;
+
+  height: 220px;
 
   &::after {
     content: '';
@@ -44,9 +45,11 @@
 .inner {
   @include flexbox;
   flex-direction: column;
-  height: 45vh;
+  min-height: 45vh;
   position: relative;
   z-index: 3;
+  top: -85px;
+  margin-bottom: -45px;
 }
 
 .user_avatar {
@@ -86,32 +89,98 @@
   }
 }
 .user {
-  .user_info {
-    @include flexbox;
-    margin-bottom: 8px;
-
-    & + & {
-      margin-bottom: 16px;
-    }
-
-    .user_info__icon {
-      background: $color-neutral-1;
-      margin-right: 8px;
-      border-radius: 50%;
-
-      @include flexbox;
-    }
-
-    &__button {
-      cursor: pointer;
-    }
-
-    &__value {
-      font-size: 16px;
-    }
-  }
-
-  &_edit{
+  &_edit {
     transform: translateY(2px);
   }
+}
+
+.user_info {
+  @include flexbox;
+  flex-direction: column;
+  padding: 0 10px;
+  margin-bottom: 8px;
+  text-align: center;
+
+  & + & {
+    margin-bottom: 16px;
+  }
+
+  &__icon {
+    background: $color-neutral-1;
+    margin-right: 8px;
+    border-radius: 50%;
+
+    @include flexbox;
+  }
+
+  &__value {
+    max-width: 50%;
+
+    &.closed {
+      @include multiplyRowsEllipsis(5);
+    }
+    @include forDesktopSm {
+      max-width: 100%;
+    }
+  }
+
+  &__button {
+    cursor: pointer;
+  }
+
+  &__value {
+    font-size: 16px;
+  }
+}
+
+.collection_statistic {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid $color-neutral-10;
+
+  border-radius: $border-radius;
+
+  margin-top: 30px;
+  margin-bottom: 40px;
+
+  @include forDesktopSm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.stat {
+  text-align: center;
+  padding: 22px 40px;
+
+  @include forTablet {
+    padding: 11px 25px;
+  }
+
+  & + & {
+    border-left: 1px solid $color-neutral-10;
+  }
+
+  &_value {
+  }
+}
+
+.link {
+  color: $color-primary;
+}
+
+.edit {
+  path {
+    stroke: #000;
+  }
+}
+
+.lessLogo {
+  width: 23px;
+  height: 23px;
+  margin-right: 5px;
+}
+
+.more_button {
+  color: $color-primary;
 }

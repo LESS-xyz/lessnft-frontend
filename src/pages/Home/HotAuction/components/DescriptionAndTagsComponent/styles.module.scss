@@ -81,6 +81,7 @@
 
   text-align: center;
   color: $color-neutral-0;
+  width: 240px;
   // transition: all $animation-timing-default ease;
 
   &:hover {
@@ -96,10 +97,6 @@
     gap: 4px;
   }
 
-  &Wrapper{
-    min-height: 158px;
-  }
-
   &.opened {
     background: #fcfcfd;
     height: 100%;
@@ -112,13 +109,16 @@
     cursor: default;
 
     color: $color-neutral-40;
+    width: 100%;
+    @include flexbox(center, center);
+    word-break: break-all;
 
     .unlockButton {
       background: none;
       box-shadow: 0 0 0 2px $color-neutral-10 inset;
       color: $color-neutral-100;
       padding: 5px 24px;
-      border-radius: 12px;
+      border-radius: $border-radius;
       height: 40px;
 
       cursor: pointer;

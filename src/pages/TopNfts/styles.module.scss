@@ -1,0 +1,260 @@
+@import '/src/styles/helpers.scss';
+
+.top {
+  padding: 45px 0;
+  @include flexbox(center);
+  flex-direction: column;
+
+  border-bottom: 2px solid $color-neutral-10;
+}
+
+.usdIcon {
+  margin-right: 5px;
+}
+
+.content {
+  @include container;
+  padding: 45px 15px;
+  @include flexbox(center, center);
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.dropdowns {
+  display: flex;
+  gap: 50px;
+}
+
+.title {
+  margin-bottom: 16px;
+}
+
+.dropdown {
+  position: relative;
+  z-index: 3;
+
+  color: $color-neutral-100;
+
+  min-width: 220px;
+
+  &.active {
+    z-index: 10;
+
+    .head {
+      .arrow {
+        svg {
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    .body {
+      visibility: visible;
+
+      opacity: 1;
+
+      transform: translateY(0);
+    }
+  }
+}
+
+.head {
+  position: relative;
+
+  padding: 8px 48px 8px 16px;
+  border-radius: $border-radius;
+
+  height: 42px;
+  @include epilogue;
+  font-size: 16px;
+  line-height: 160%;
+
+  cursor: pointer;
+
+  // @include dark {
+  border: 2px solid $color-neutral-10;
+
+  transition: box-shadow 0.2s;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  // }
+
+  &:hover {
+    border-color: $color-actions-light-blue;
+    box-shadow: 0 1px 6px rgba(119, 126, 144, 0.48);
+  }
+}
+
+.selection {
+  overflow: hidden;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.margin {
+  margin-left: 28px;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  right: 24px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transform: translateY(-50%);
+}
+
+.body {
+  position: absolute;
+  top: calc(100% + 2px);
+  right: 0;
+  left: 0;
+
+  padding: 8px 0;
+
+  visibility: hidden;
+
+  background: $color-bg;
+  opacity: 0;
+  border: 2px solid $color-neutral-10;
+  border-radius: $border-radius;
+
+  transition: all 0.2s;
+  transform: translateY(3px);
+  // }
+}
+
+.option {
+  @include flexbox(center, flex-start);
+  padding: 8px 16px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+  transition: color 0.2s;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  &:hover,
+  &.selectioned {
+    color: $color-action-hovered;
+  }
+
+  .selected {
+    color: $color-action-pressed;
+  }
+}
+
+.text {
+  margin-left: 10px;
+}
+
+.image {
+  width: 24px;
+  height: 24px;
+  &Option {
+    position: absolute;
+  }
+}
+
+.input {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.71429;
+
+  color: $color-neutral-0;
+  background-color: transparent;
+  @include placeholder {
+    color: $color-neutral-40;
+  }
+}
+
+.collections {
+  margin-top: 59px;
+  width: 100%;
+  &Head {
+    padding-bottom: 20px;
+    display: grid;
+    grid-template-columns: 0.5fr 6fr 3fr 3fr 3fr 1.5fr 1fr;
+    border-bottom: 1px solid $color-neutral-10;
+
+    .isCanSort {
+      cursor: pointer;
+    }
+
+    .sorting {
+      margin-left: 8px;
+    }
+
+    .isReverted {
+      transform: rotate(180deg);
+    }
+  }
+
+  .collection {
+    display: grid;
+    grid-template-columns: 0.5fr 6fr 3fr 3fr 3fr 1.5fr 1fr;
+    border-bottom: 1px solid $color-neutral-10;
+    padding: 15px 0;
+    &Avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      margin-right: 16px;
+    }
+    &Number {
+      @include flexbox(center, center);
+    }
+    &Start {
+      @include flexbox(center, flex-start);
+    }
+  }
+}
+
+.collectionsFooter {
+  margin: 30px 32px;
+
+  .dropdown {
+    min-width: 0;
+  }
+  @include flexbox(center, space-between);
+
+  .page {
+    &Arrow {
+      transform: translateY(-1px);
+    }
+    &Dropdown {
+      .head {
+        border-radius: 0;
+        padding: 2px 0 0 8px;
+        width: 51px;
+        height: 32px;
+      }
+      .arrow {
+        right: 4px;
+      }
+      .body {
+        border-radius: 0;
+        width: 52px;
+
+        .option {
+          @include flexbox(center, center);
+          .text {
+            margin-left: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .perPage {
+    @include flexbox(center, center);
+
+    &Text {
+      margin-right: 8px;
+    }
+  }
+}

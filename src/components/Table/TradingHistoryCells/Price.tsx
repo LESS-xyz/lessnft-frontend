@@ -19,11 +19,15 @@ const TradingHistoryPrice: FC<Props> = ({ className, amount, currency, type }) =
   <div className={cx(styles.tradingHistoryCells, className)}>
     {!(type === 'Mint' || type === 'Transfer') && (
       <>
-        <div className={styles.tradingIcon}>
-          <img src={currency.image} alt={currency.name} />
-        </div>
+        {currency && (
+          <div className={styles.tradingIcon}>
+            <img src={currency.image} alt={currency.name} />
+          </div>
+        )}
         <Text description={amount?.toString()} style={{ textTransform: 'uppercase' }} size="m">
-          {`${amount === null ? 0 : toFixed(amount, 5)} ${currency?.symbol.toUpperCase()}`}
+          {`${amount === null ? 0 : toFixed(amount, 5)} ${
+            amount === null ? '' : currency?.symbol.toUpperCase()
+          }`}
         </Text>
       </>
     )}

@@ -3,6 +3,7 @@ import { types } from 'mobx-state-tree';
 const Tag = types.model({
   title: types.optional(types.string, ''),
   icon: types.optional(types.string, ''),
+  image: types.optional(types.string, ''),
 });
 
 export const NftTags = types

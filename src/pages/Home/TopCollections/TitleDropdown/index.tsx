@@ -32,7 +32,7 @@ const TitleDropdown: FC<IProps> = ({ options, value, setValue, className }) => {
           onClick={() => setIsOpen((prevState) => !prevState)}
           className={styles.selected}
         >
-          last {value.label}
+          <span className={styles.gradientValue}> last {value.label}</span>
           <div className={styles.dropdownContainer}>
             <img
               src={iconArrowDownBlue}

@@ -3,7 +3,8 @@
 
 .page {
   &_user {
-    background-color: #84334d;
+    // background-color: #84334d;
+    color: #000;
   }
 
   &_body {
@@ -30,6 +31,10 @@
         padding: 44px 5px;
       }
     }
+  }
+
+  .discoverFilters {
+    margin-top: 0;
   }
 }
 

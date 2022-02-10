@@ -12,17 +12,11 @@ type Props = {
   currency: ICurrency;
 };
 
-const TradingHistory: FC<Props> = ({
-  columns,
-  tableData,
-  className,
-  currency,
-}) => (
+const TradingHistory: FC<Props> = ({ columns, tableData, className, currency }) => (
   <div className={cx(styles.history, className)}>
-    <div className={styles.chartFilter}>
-      <Text size="l">Trading History</Text>
-    </div>
-    <Text size="l" className={styles.soldOut}>{tableData.length} items sold</Text>
+    <Text size="l" className={styles.soldOut}>
+      {tableData.length} items sold
+    </Text>
     <div className={styles.tableWrapper}>
       <Table currency={currency} columns={columns} data={tableData} />
     </div>

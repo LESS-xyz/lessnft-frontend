@@ -2,17 +2,7 @@
 @import 'src/styles/mixins/media';
 
 .wrapper {
-  margin-top: 40px;
   max-height: 550px;
-  gap: 24px;
-  @include flexbox(stretch, space-between);
-}
-
-.chartWrapper {
-  padding: 32px;
-  border: 1px solid $color-neutral-10;
-  flex: 0 0 60%;
-  border-radius: $border-radius;
 }
 
 .tradingHistoryWrapper {
@@ -37,7 +27,6 @@
 
 .chart {
   margin-top: 20px;
-  max-width: 650px;
 
   @include forDesktopBig {
     max-width: none;
@@ -51,6 +40,6 @@
 @include b(1280) {
   .wrapper {
     flex-direction: column;
-    max-height: 1000px;
+    max-height: 1140px;
   }
 }

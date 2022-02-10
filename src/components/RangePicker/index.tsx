@@ -12,7 +12,7 @@ import styles from './styles.module.scss';
 type Props = {
   top?: boolean;
   isSwitcher?: boolean;
-  value?: number;
+  value?: number | string;
   label?: string;
   min?: number;
   max?: number;
@@ -23,7 +23,7 @@ type Props = {
   classNameWrap?: string;
   isCurrenciesVisible?: boolean;
   valueSwitcher?: boolean;
-  onChange?: (value: number) => void;
+  onChange?: (value: number | string) => void;
   onSwitcher?: (value: boolean) => void;
   isDebounce?: boolean;
   currency?: string;
@@ -76,7 +76,7 @@ const RangePicker: FC<Props> = ({
         const numberValue = e.target.value;
         const total = +numberValue > max ? max : numberValue;
         setLocalValue(total.toString());
-        onChange(+total);
+        onChange(total);
       }
     },
     [max, onChange],
@@ -140,7 +140,7 @@ const RangePicker: FC<Props> = ({
             type="button"
             className={cx(styles.manageBtn, styles.manageBtnMinus)}
             onClick={() => {
-              const res = value - step;
+              const res = +value - step;
               onChange(res < 0 ? 0 : res);
             }}
           >
@@ -152,7 +152,7 @@ const RangePicker: FC<Props> = ({
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore (rc-slider show that className invalid prop, but exist
           className={cx(styles.slider, 'rc-slider-wrap', className)}
-          value={+localValue || value}
+          value={+localValue || +value}
           min={min}
           max={max}
           step={step}
@@ -182,7 +182,7 @@ const RangePicker: FC<Props> = ({
             type="button"
             className={cx(styles.manageBtn, styles.manageBtnPlus)}
             onClick={() => {
-              const res = value + step;
+              const res = +value + step;
               onChange(res > max ? max : res);
             }}
           >

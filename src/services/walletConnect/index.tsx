@@ -60,10 +60,9 @@ class Connector extends React.Component<
           providerName as any,
         );
         if (isConnected) {
-          const subscriber = this.state.provider.getAccount().subscribe(
+          this.state.provider.getAccount().then(
             async (userAccount: any) => {
               if (rootStore.user.address && userAccount.address !== rootStore.user.address) {
-                subscriber.unsubscribe();
                 this.disconnect();
               } else {
                 this.state.provider.setAccountAddress(userAccount.address);

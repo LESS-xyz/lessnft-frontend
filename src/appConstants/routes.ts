@@ -20,10 +20,16 @@ export const routes = {
     root: '/create',
     single: '/create/single',
     multiple: '/create/multiple',
+    collection: {
+      single: '/create/collection/single',
+      multiple: '/create/collection/multiple',
+    },
   },
   profile: {
-    link: (id: string | number, tab?: 'created' | 'owned' | 'favorited' | 'about'): string =>
-      `/profile/${id}${tab ? `/?tab=${tab}` : ''}`,
+    link: (
+      id: string | number,
+      tab?: 'created' | 'owned' | 'favorited' | 'about' | 'collections' | 'received' | 'made',
+    ): string => `/profile/${id}${tab ? `/?tab=${tab}` : ''}`,
     root: '/profile/:userId',
     edit: '/profile/edit',
   },
@@ -38,5 +44,9 @@ export const routes = {
   },
   comingSoon: {
     root: '/soon',
+  },
+  topNfts: {
+    link: (time: string ): string => `topnfts/${time}`,
+    root: '/topnfts/:timeOption',
   },
 };

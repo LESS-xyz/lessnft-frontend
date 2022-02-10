@@ -21,6 +21,10 @@ const Checkout: React.FC = observer(() => {
     sell?.nft?.standart === 'ERC721'
       ? sell?.nft?.tokenAvailable
       : sell?.nft?.sellers?.filter((sellerItem) => sell.nft.sellerId === sellerItem.id)[0].quantity;
+  const price =
+    sell?.nft?.standart === 'ERC721'
+      ? sell?.nft?.price
+      : sell?.nft?.sellers?.filter((sellerItem) => sell.nft.sellerId === sellerItem.id)[0].price;
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [quantity, setQuantity] = React.useState('1');
@@ -46,7 +50,12 @@ const Checkout: React.FC = observer(() => {
             .then((res: any) => {
               toast.success('Successful purchase of nft');
               storeApi
-                .trackTransaction(res.transactionHash, sell.nft.tokenId, sell.nft.sellerId)
+                .trackTransaction(
+                  res.transactionHash,
+                  sell.nft.tokenId,
+                  sell.nft.sellerId,
+                  sell.nft.standart === 'ERC721' ? 0 : +amount,
+                )
                 .then(() => {
                   setTimeout(() => {
                     sell.checkout.success();
@@ -60,6 +69,11 @@ const Checkout: React.FC = observer(() => {
                 description: 'Something went wrong',
               });
               console.error(error);
+              storeApi.rejectTransaction({
+                id: sell.nft.tokenId,
+                type: 'token',
+                owner: sell.nft.sellerId,
+              });
             })
             .finally(() => setIsLoading(false));
         })
@@ -75,10 +89,10 @@ const Checkout: React.FC = observer(() => {
   }, [walletService, quantity, user.id, sell]);
 
   const userWillPay = React.useMemo(() => {
-    return new BigNumber(sell.nft.price || 0)
+    return new BigNumber(price || 0)
       .multipliedBy(+quantity > tokenAvailable ? tokenAvailable : quantity || 1)
       .plus(sell.nft.feeCurrency);
-  }, [sell.nft.price, quantity, tokenAvailable, sell.nft.feeCurrency]);
+  }, [price, quantity, tokenAvailable, sell.nft.feeCurrency]);
 
   return (
     <div className={styles.container}>
@@ -91,9 +105,9 @@ const Checkout: React.FC = observer(() => {
           <div className={styles.item}>
             <div className={styles.itemTitle}>Price</div>
             <div className={styles.itemInfo}>
-              <div className={styles.itemPrice}>{`${
-                sell.nft.price
-              } ${sell.nft.currency.toUpperCase()}`}</div>
+              <div
+                className={styles.itemPrice}
+              >{`${price} ${sell.nft.currency.toUpperCase()}`}</div>
               <div className={styles.itemPriceUsd}>{`($${sell.nft.usdPrice})`}</div>
             </div>
           </div>

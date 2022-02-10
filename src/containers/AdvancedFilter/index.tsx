@@ -2,12 +2,24 @@ import { FC, useEffect, useState } from 'react';
 import { cross } from 'assets/img';
 import cx from 'classnames';
 import { Button, H3, RangePicker, Select, Text } from 'components';
-import { TDefaultValues } from 'hooks/useFilters';
 import { IAppliedFilter, OptionType } from 'typings';
 
 import FilterTag from './FilterTag';
 
 import styles from './styles.module.scss';
+
+const DEFAULT_FILTER_STATE = {
+  type: 'items',
+  order_by: '-created_at',
+  tags: 'All NFTs',
+  max_price: 0,
+  currency: 'All',
+  page: 1,
+  is_verificated: 'All',
+  text: '',
+};
+
+type TDefaultValues = typeof DEFAULT_FILTER_STATE;
 
 const filterSelectArtistsOptions = [
   {
@@ -37,6 +49,7 @@ type Props = {
   handleVerifiedFilter: (value: any) => void;
   defaultValues: TDefaultValues;
   resetFilter: (key?: string) => void;
+  textFilter: OptionType;
 };
 
 const AdvancedFilter: FC<Props> = ({
@@ -52,16 +65,18 @@ const AdvancedFilter: FC<Props> = ({
   handleVerifiedFilter,
   defaultValues,
   resetFilter,
+  textFilter,
 }) => {
   const [appliedFilters, setAppliedFilters] = useState<IAppliedFilter[]>([
     maxPriceFilter,
     currencyFilter,
     verifiedFilter,
+    textFilter,
   ]);
 
   useEffect(() => {
-    setAppliedFilters([currencyFilter, verifiedFilter]);
-  }, [currencyFilter, verifiedFilter]);
+    setAppliedFilters([currencyFilter, verifiedFilter, textFilter]);
+  }, [currencyFilter, verifiedFilter, textFilter]);
 
   return (
     <div className={cx(styles.advancedFilter, { [styles.mobile]: isMobile }, className)}>
@@ -90,7 +105,7 @@ const AdvancedFilter: FC<Props> = ({
             <FilterTag
               key={filter.value}
               className={styles.filterTag}
-              label={filter.label}
+              label={filter.label.length > 10 ? `${filter.label.slice(0, 10)}...` : filter.label}
               closeTag={() => {
                 resetFilter(filter.field);
               }}
@@ -104,7 +119,7 @@ const AdvancedFilter: FC<Props> = ({
         <RangePicker
           className={styles.rangeFilter}
           onChange={handleMaxPriceFilter}
-          value={+maxPriceFilter.value}
+          value={maxPriceFilter.value}
           currency={currencyFilter.value}
           min={0}
           max={maxPrice}

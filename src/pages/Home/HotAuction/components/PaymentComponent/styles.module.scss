@@ -11,8 +11,12 @@
   font-size: 16px;
   line-height: 160%;
   font-weight: 600;
-  width: auto;
+  width: 100%;
+  max-width: 250px;
   padding: 7.5px 72px;
+  &:only-child{
+    max-width: 100%;
+  }
   @include forDesktopSm {
     padding: 8px 12px;
     width: 100%;
@@ -38,7 +42,6 @@
 }
 
 .priceAndGrowth {
-  @include flexbox();
   margin: 5px 0;
   & > * {
     &:first-child {
@@ -58,4 +61,31 @@
   flex-wrap: wrap;
   margin-top: 10px;
   gap: 15px;
+}
+
+.left {
+  width: 100%
+}
+
+.right {
+  @include flexbox(center, center);
+  flex-direction: column;
+  margin-bottom: 12px;
+  align-self: center;
+
+  &Title {
+    font-weight: 500;
+    color: $color-neutral-100;
+    font-size: 15px;
+  }
+
+  &Times {
+    @include flexbox(flex-start, space-around);
+    width: 100%;
+
+    &Item {
+      @include flexbox(center, center);
+      flex-direction: column;
+    }
+  }
 }

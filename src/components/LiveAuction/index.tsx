@@ -25,6 +25,7 @@ interface IHotBidShorted {
   authorId: string;
   likesNumber: number;
   tags: string[];
+  collection: any;
 }
 
 const LiveAuction: React.FC<IProps> = ({ className }) => {
@@ -74,7 +75,7 @@ const LiveAuction: React.FC<IProps> = ({ className }) => {
     <div className={cn(className, styles.liveAuction)}>
       <H3 className={styles.title}>Live Auction Today</H3>
       {auctions.length ? (
-        <Carousel slidesToShow={numberOfSlide}>
+        <Carousel classNameProp={styles.cards} slidesToShow={numberOfSlide}>
           {auctions.map((artCard) => {
             const {
               id,
@@ -90,10 +91,12 @@ const LiveAuction: React.FC<IProps> = ({ className }) => {
               authorId,
               likesNumber,
               tags,
+              collection,
             } = artCard;
             return (
               <div className={styles.liveCard}>
                 <ArtCard
+                  type={collection?.display_theme}
                   artId={id}
                   key={id}
                   imageMain={image}
@@ -113,7 +116,7 @@ const LiveAuction: React.FC<IProps> = ({ className }) => {
         </Carousel>
       ) : (
         <Text size="xl" className={styles.noItems}>
-          There are no artowrks in this collection yet
+          There are no auctions
         </Text>
       )}
     </div>

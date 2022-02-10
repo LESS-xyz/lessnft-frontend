@@ -4,3 +4,53 @@
   @include autoGrid;
   margin-bottom: 32px;
 }
+
+.createWrapper {
+  margin-bottom: 40px;
+  @include flexbox(flex-start, flex-start);
+
+  .button {
+    margin-left: 12px;
+    position: relative;
+    min-width: 38px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid $color-primary;
+    border-radius: $border-radius;
+  }
+
+  .actions {
+    &Item {
+      @include flexbox(center, flex-start);
+      padding: 12px;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 29px;
+      cursor: pointer;
+      transition: 0.3s;
+      color: $color-neutral-100;
+      img {
+        margin-right: 7px;
+      }
+      & + & {
+        border-top: 1px solid $color-neutral-10;
+      }
+      &:hover {
+        &.blue {
+          background: rgba($color-primary, 0.4);
+        }
+        &.red {
+          background: rgba($color-state-error, 0.4);
+        }
+      }
+    }
+  }
+
+  .active{
+    color: $color-primary;
+  }
+}
+
+.optionBtn {
+  position: relative;
+}

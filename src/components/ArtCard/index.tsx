@@ -12,14 +12,14 @@ import { numberFormatter, sliceString, toFixed } from 'utils';
 import styles from './styles.module.scss';
 
 type Props = {
-  type?: 'Small' | 'Medium';
+  type?: 'Padded' | 'Contained' | 'Covered';
   artId: string | number;
   className?: string;
   imageMain: string;
-  imageSecondaryOne?: string;
-  imageSecondaryTwo?: string;
-  imageSecondaryThree?: string;
-  allArtNumber?: string | number;
+  // imageSecondaryOne?: string;
+  // imageSecondaryTwo?: string;
+  // imageSecondaryThree?: string;
+  // allArtNumber?: string | number;
   name: string;
   price: string | number;
   asset: string;
@@ -36,14 +36,14 @@ type Props = {
 };
 
 const ArtCard: FC<Props> = ({
-  type = 'Small',
+  type = 'Covered',
   artId,
   className,
   imageMain,
-  imageSecondaryOne,
-  imageSecondaryTwo,
-  imageSecondaryThree,
-  allArtNumber = '25',
+  // imageSecondaryOne,
+  // imageSecondaryTwo,
+  // imageSecondaryThree,
+  // allArtNumber = '25',
   name,
   price,
   asset,
@@ -71,7 +71,7 @@ const ArtCard: FC<Props> = ({
       const img = imgRef.current;
       const mouseMoveEvent = (e: any) => {
         const moveX = 100 - ((e.offsetX - offset) / div.offsetWidth) * 100;
-        const moveY = 100 - ((e.offsetX - offset) / div.offsetHeight) * 100;
+        const moveY = 100 - ((e.offsetY - offset) / div.offsetHeight) * 100;
         img.style.objectPosition = `${moveX}% ${moveY}%`;
       };
       div.addEventListener('mousemove', mouseMoveEvent);
@@ -115,12 +115,12 @@ const ArtCard: FC<Props> = ({
   }, [artId, isLike, isLiked, likeAction, likesNumber]);
 
   return (
-    <div className={cx(styles.artCard, className, styles[`artCard${type}`])}>
+    <div className={cx(styles.artCard, className)}>
       <Link
         to={isCollection ? routes.collection.link(artId) : routes.nft.link(artId)}
-        className={cx(styles[`mainImageWrapper${type}`], styles.imageWrapper)}
+        className={styles.imageWrapper}
         onMouseOver={onMouseOver}
-        onFocus={() => { }}
+        onFocus={() => {}}
         innerRef={wrapRef}
       >
         <div className={styles.tagContainer}>
@@ -130,36 +130,13 @@ const ArtCard: FC<Props> = ({
               key={index}
               type={tag.type}
               auctionEndTime={tag.auctionEndTime}
-              media={tag.media}
-              value={tag.value}
+              media={tag.icon}
+              value={tag.title}
             />
           ))}
         </div>
-        <img ref={imgRef} className={styles.mainImage} src={imageMain} alt="" />
+        <img ref={imgRef} className={cx(styles.mainImage, styles[type])} src={imageMain} alt="" />
       </Link>
-      {type === 'Medium' && (
-        <div className={cx(styles.secondaryImagesContainer)}>
-          <div className={cx(styles.secondaryImageWrapper, styles.imageWrapper)}>
-            <img src={imageSecondaryOne} alt="" />
-          </div>
-
-          <div className={cx(styles.secondaryImageWrapper, styles.imageWrapper)}>
-            {imageSecondaryTwo && <img src={imageSecondaryTwo} alt="" />}
-          </div>
-          <div
-            className={cx(
-              styles.secondaryImageWrapper,
-              styles.lastSecondaryImageWrapper,
-              styles.imageWrapper,
-            )}
-          >
-            {allArtNumber > 3 && (
-              <Text className={styles.allArtNumber} size="m">{`${allArtNumber} +`}</Text>
-            )}
-            {imageSecondaryThree && <img src={imageSecondaryThree} alt="" />}
-          </div>
-        </div>
-      )}
       <div className={styles.artCardInfo}>
         <Text size="xl">{sliceString(name, 20, 0)}</Text>
         <div className={styles.flexContainer}>
@@ -169,7 +146,7 @@ const ArtCard: FC<Props> = ({
               {bids?.length ? <span className={styles.bidText}>(Highest Bid)</span> : null}
             </Text>
           )}
-          {type === 'Small' && !bids?.length && (
+          {!bids?.length && (
             <Text size="m">{inStockNumber ? `in stock: ${inStockNumber}` : 'Out of stock'}</Text>
           )}
         </div>

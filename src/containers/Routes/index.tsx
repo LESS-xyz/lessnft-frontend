@@ -15,33 +15,63 @@ import {
   Profile,
   ProfileEdit,
   UploadVariants,
+  TopNfts,
+  CreateCollection,
 } from 'pages';
 import { useMst } from 'store';
+import { Page } from 'containers';
 
 const Routes = observer(() => {
   const { user } = useMst();
 
   return (
     <Switch>
-      <Route path={routes.nft.root} component={Nft} />
-      <Route path={routes.discover.root} component={Discover} />
-      <Route exact path={routes.profile.edit} component={ProfileEdit} />
-      <Route path={routes.profile.root} component={Profile} />
+      <Route path={routes.nft.root} render={() => <Page component={<Nft />} />} />
+      <Route
+        path={routes.discover.root}
+        render={() => <Page needFooter={false} component={<Discover />} />}
+      />
+      <Route exact path={routes.profile.edit} render={() => <Page component={<ProfileEdit />} />} />
+      <Route path={routes.profile.root} render={() => <Page component={<Profile />} />} />
 
-      <Route exact path={routes.home.root} component={Home} />
-      <Route exact path={routes.activity.root} component={Activity} />
-      <Route path={routes.collection.root} component={CollectionPage} />
-      <Route path={routes.connectWallet.root} component={ConnectWallet} />
-      <Route path={routes.lostPage.root} component={LostPage404} />
-      <Route path={routes.comingSoon.root} component={ComingSoon} />
+      <Route exact path={routes.home.root} render={() => <Page component={<Home />} />} />
+      <Route exact path={routes.activity.root} render={() => <Page component={<Activity />} />} />
+      <Route
+        path={routes.collection.root}
+        render={() => <Page needFooter={false} component={<CollectionPage />} />}
+      />
+      <Route
+        path={routes.connectWallet.root}
+        render={() => <Page component={<ConnectWallet />} />}
+      />
+      <Route path={routes.topNfts.root} render={() => <Page component={<TopNfts />} />} />
+      <Route path={routes.lostPage.root} render={() => <Page component={<LostPage404 />} />} />
+      <Route path={routes.comingSoon.root} render={() => <Page component={<ComingSoon />} />} />
       {/* GUARDED ROUTES */}
-      <GuardedRoute auth={user.isAuth} path={routes.create.single} component={CreateToken} />
+      <GuardedRoute
+        auth={user.isAuth}
+        path={routes.create.single}
+        render={() => <Page component={<CreateToken />} />}
+      />
+      <GuardedRoute
+        auth={user.isAuth}
+        path={routes.create.collection.multiple}
+        render={() => <Page component={<CreateCollection isMultiple />} />}
+      />
       <GuardedRoute
         auth={user.isAuth}
         path={routes.create.multiple}
-        render={() => <CreateToken isMultiple />}
+        render={() => <Page component={<CreateToken isMultiple />} />}
       />
-      <GuardedRoute auth={!!user.address} path={routes.create.root} component={UploadVariants} />
+      <Route
+        path={routes.create.collection.single}
+        render={() => <Page component={<CreateCollection />} />}
+      />
+      <GuardedRoute
+        auth={!!user.address}
+        path={routes.create.root}
+        render={() => <Page component={<UploadVariants />} />}
+      />
       {/* GUARDED ROUTES */}
       <Redirect to={{ pathname: routes.lostPage.root }} />
     </Switch>

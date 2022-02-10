@@ -27,7 +27,7 @@ const CreateAndSell: FC<Props> = observer(({ className }) => {
           return (
             <div key={title} className={styles.howItWorksCard}>
               <IconComponent />
-              <Text weight="medium" size="xl">
+              <Text weight="medium" align="center" size="xl">
                 {title}
               </Text>
               <Text color="gray" size="m" align="center">

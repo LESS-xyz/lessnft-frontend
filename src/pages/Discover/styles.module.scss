@@ -1,6 +1,8 @@
 @import '../../styles/helpers.scss';
 
 .discover {
+  border-top: 1px solid $color-neutral-10;
+  margin-top: 10px;
   &Title {
     margin-right: 24px;
 
@@ -49,12 +51,24 @@
 }
 
 .filterAndCards {
-  @include container;
   position: relative;
   min-height: 50vh;
   transition: 200ms;
   transform: translateX(0);
-  @include flexbox(normal, normal);
+
+  padding: 0 20px;
+
+  display: grid;
+  grid-template-columns: 75px 1fr;
+
+  &.open {
+    grid-template-columns: 380px 1fr;
+  }
+
+  @include forDesktopSm() {
+    display: block;
+    padding: 0;
+  }
 
   .filter {
     flex: 0 1 0;
@@ -81,11 +95,22 @@
   }
 
   .filterResultsContainer {
-    margin-top: 44px;
-    flex-basis: 100%;
+    padding-right: 84px;
+
+    @include forDesktopBig() {
+      padding-right: 32px;
+    }
+
+    @include forDesktopSm() {
+      padding-right: 0;
+      padding: 0 20px;
+    }
+
+    padding-top: 35px;
 
     .filterResults {
       margin-top: 24px;
+      margin-bottom: 12px;
     }
 
     &.withFilter {
@@ -108,7 +133,6 @@
   }
 
   .filterAndCards {
-    padding: 0 18px;
     .filterResultsContainer {
       &.withFilter {
         flex-basis: 100%;
@@ -153,6 +177,8 @@
 }
 
 .title {
+  display: flex;
+  gap: 8px;
   .gradientTitle {
     @include gradientText;
   }
@@ -239,15 +265,74 @@
 }
 
 .select {
-  width: 155px;
+  width: 240px;
 }
 
 .image {
   margin-left: 10px;
 }
 
+.stickyWrapper {
+}
+
 .sticky {
   position: sticky;
   top: 0;
   transition: 0.4s ease;
+}
+
+.header {
+  @include flexbox(center, space-between);
+  flex-wrap: wrap;
+  gap: 15px;
+}
+// toogler
+.toogle_cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 108px;
+}
+.toogle_item {
+  background: $color-neutral-0;
+  border: 2px solid $color-neutral-10;
+  padding: 8px 15px;
+  cursor: pointer;
+
+  &.active {
+    background-color: $color-neutral-10;
+    svg rect {
+      fill: $color-primary;
+    }
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  &:first-child {
+    border-radius: 12px 0px 0px 12px;
+  }
+  &:last-child {
+    border-radius: 0px 12px 12px 0px;
+  }
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+  gap: 25px;
+
+  &.small {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+
+  @include forDesktopSm {
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  }
+}
+
+.total {
+  flex-grow: 1;
 }

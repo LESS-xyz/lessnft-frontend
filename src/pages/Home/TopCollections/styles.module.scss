@@ -3,18 +3,17 @@
 .topCollections {
   @include container;
   margin-top: 88px;
-  margin-bottom: 88px;
 }
 
-.collections{
+.collections {
   height: auto;
   max-height: 0;
   transition: $transition;
   overflow: hidden;
   margin-top: 20px;
 
-  &.open{
-      max-height: 1000px;
+  &.open {
+    max-height: 1000px;
   }
 }
 
@@ -24,27 +23,30 @@
   flex-wrap: wrap;
 }
 
-.goRankingBtn{
+.goRankingBtn {
   margin: 20px auto 0;
   padding: 0 32px;
+  max-width: 180px;
 }
-
 
 .collectionsWrapper {
   display: grid;
-  grid-template-columns:repeat(auto-fit, 33.3%);
-  // grid-template-rows: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fit, 33.3%);
+
+  @include forDesktopSm {
+    grid-template-columns: repeat(auto-fit, 100%);
+  }
   grid-column-gap: 30px;
   grid-row-gap: 16px;
   grid-auto-flow: column;
 }
 
-.srcToRanking{
+.srcToRanking {
   margin: 0 auto;
   padding: 0 32px;
 }
 
-.noItems{
+.noItems {
   margin: 0 auto;
   text-align: center !important;
   margin-top: 16px;

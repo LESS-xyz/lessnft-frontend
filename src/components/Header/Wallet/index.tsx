@@ -1,9 +1,9 @@
-import { FC, useCallback, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { wallet } from 'assets/img';
 import cn from 'classnames';
-import { Button, EllipsisText, H6, Text } from 'components';
+import { EllipsisText, H6, Text } from 'components';
 import { chains } from 'config';
-import { usePopover, useUserBalance } from 'hooks';
+import { useUserBalance } from 'hooks';
 import { observer } from 'mobx-react';
 import { useMst } from 'store';
 import { chainsEnum } from 'typings';
@@ -16,28 +16,29 @@ interface IUserProps {
   className?: string;
 }
 
-let MAIN: string;
-let WRAP: 'WBNB' | 'WETH' | 'NFT' | 'BEP20' | 'WMATIC';
+// let MAIN: string;
+// let WRAP: 'WBNB' | 'WETH' | 'NFT' | 'BEP20' | 'WMATIC';
 
 const WalletBody: FC = observer(() => {
-  switch (localStorage.lessnft_nft_chainName) {
-    case 'Binance-Smart-Chain':
-      MAIN = 'BNB';
-      WRAP = 'WBNB';
-      break;
-    case 'Ethereum':
-      MAIN = 'ETH';
-      WRAP = 'WETH';
-      break;
-    default:
-      MAIN = 'MATIC';
-      WRAP = 'WMATIC';
-  }
+  const MAIN = 'LESS'
+  // switch (localStorage.lessnft_nft_chainName) {
+  //   case 'Binance-Smart-Chain':
+  //     MAIN = 'BNB';
+  //     WRAP = 'WBNB';
+  //     break;
+  //   case 'Ethereum':
+  //     MAIN = 'ETH';
+  //     WRAP = 'WETH';
+  //     break;
+  //   default:
+  //     MAIN = 'MATIC';
+  //     WRAP = 'WMATIC';
+  // }
   const {
     user,
     modals: { swap },
   } = useMst();
-  const { closePopover } = usePopover();
+  // const { closePopover } = usePopover();
 
   const imageSrc =
     chains[chains[chainsEnum[localStorage.lessnft_nft_chainName as chainsEnum]].name].provider[
@@ -45,13 +46,13 @@ const WalletBody: FC = observer(() => {
     ].img;
   const balanceMain = useUserBalance(user.address, MAIN, swap.refresh, true);
   user.setBalance(balanceMain, 'eth');
-  const balanceWrap = useUserBalance(user.address, WRAP, swap.refresh, true);
-  user.setBalance(balanceWrap, 'weth');
+  // const balanceWrap = useUserBalance(user.address, WRAP, swap.refresh, true);
+  // user.setBalance(balanceWrap, 'weth');
 
-  const handleOpenModal = useCallback(async () => {
-    swap.open(MAIN, WRAP, false);
-    closePopover();
-  }, [closePopover, swap]);
+  // const handleOpenModal = useCallback(async () => {
+  //   swap.open(MAIN, WRAP, false);
+  //   closePopover();
+  // }, [closePopover, swap]);
 
   useEffect(() => {
     console.log(swap.getIsOpen);
@@ -78,17 +79,17 @@ const WalletBody: FC = observer(() => {
             <Text tag="span">{MAIN}</Text>
           </H6>
         </div>
-        <div className={styles.balance}>
+        {/* <div className={styles.balance}>
           <H6 className={styles.title}>
             <EllipsisText>
               <Text tag="span">{toFixed(balanceWrap, 5)} </Text>
             </EllipsisText>
             <Text tag="span">{WRAP}</Text>
           </H6>
-        </div>
-        <Button className={styles.button} color="outline" onClick={handleOpenModal}>
+        </div> */}
+        {/* <Button className={styles.button} color="outline" onClick={handleOpenModal}>
           Convert
-        </Button>
+        </Button> */}
       </div>
     </>
   );

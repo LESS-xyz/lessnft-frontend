@@ -29,7 +29,7 @@ const UserBody: FC<{ user: any }> = ({ user }) => {
       {
         title: 'My collections',
         icon: <Collections />,
-        url: routes.profile.link(user.id, 'owned'),
+        url: routes.profile.link(user.id, 'collections'),
       },
       {
         title: 'Favorites',

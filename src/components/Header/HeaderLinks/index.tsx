@@ -5,7 +5,7 @@ import { routes } from 'appConstants';
 import cx from 'classnames';
 import { Button, Text } from 'components';
 import { Popover } from 'containers';
-import { usePopover } from 'hooks';
+import { usePopover, useWindowSize } from 'hooks';
 import { observer } from 'mobx-react-lite';
 import { useMst } from 'store';
 
@@ -33,7 +33,7 @@ const HeaderNestedBody: FC<IHeaderNestedBodyProps> = ({ isLinks = false, links, 
   const { closePopover } = usePopover();
   const handleTagClick = (title: string) => {
     closePopover();
-    onClick(routes.discover.filter(title === 'All NFTs' ? '' : title));
+    onClick(routes.discover.filter(title));
   };
 
   if (isLinks && links) {
@@ -73,6 +73,7 @@ const HeaderNestedBody: FC<IHeaderNestedBodyProps> = ({ isLinks = false, links, 
 const HeaderLinks: FC<IHeaderLinksProps> = observer(({ className, toggleMenu }) => {
   const { user, nftTags } = useMst();
   const history = useHistory();
+  const { width } = useWindowSize();
 
   const location = useLocation();
 
@@ -82,8 +83,9 @@ const HeaderLinks: FC<IHeaderLinksProps> = observer(({ className, toggleMenu }) 
         title: 'Explore',
         active: location.pathname.includes(routes.discover.root),
         disabled: false,
-        isNested: true,
+        isNested: width > 768,
         internalLinks: nftTags.getTags,
+        url: width < 768 ? routes.discover.root : '',
       },
 
       {
@@ -107,8 +109,9 @@ const HeaderLinks: FC<IHeaderLinksProps> = observer(({ className, toggleMenu }) 
         isNested: false,
       },
     ],
-    [location.pathname, nftTags.getTags, user.address],
+    [location.pathname, nftTags.getTags, user.address, width],
   );
+
   const handleMenuItemClick = (url: string) => {
     if (toggleMenu) {
       toggleMenu();

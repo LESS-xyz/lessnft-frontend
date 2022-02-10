@@ -1,0 +1,17 @@
+@import '/src/styles/helpers.scss';
+
+.labels {
+  margin-top: 24px;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 10px;
+}
+
+.button {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 160%;
+  color: $color-primary;
+}

@@ -1,5 +1,6 @@
 @import 'src/styles/helpers';
 
+
 .profileEdit {
   margin: 0 auto;
 }
@@ -150,5 +151,9 @@
   @include m {
     margin: 32px auto 0;
     width: 311px;
+  }
+
+  @include s{
+    width: 100%;
   }
 }

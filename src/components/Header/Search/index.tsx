@@ -87,7 +87,7 @@ const Search: VFC<Props> = ({ isDesktop = true, className, classNameDropdown }) 
                     total_supply,
                     is_auc_selling,
                     id,
-                    is_selling,
+                    selling,
                   } = nft;
                   return (
                     <li className={styles.searchItem} key={`${nft?.creator}-${nft?.name}`}>
@@ -104,7 +104,7 @@ const Search: VFC<Props> = ({ isDesktop = true, className, classNameDropdown }) 
                           asset={symbol}
                           isAuction={is_auc_selling}
                           inStock={total_supply}
-                          isSelling={is_selling}
+                          isSelling={selling}
                         />
                       </Link>
                     </li>

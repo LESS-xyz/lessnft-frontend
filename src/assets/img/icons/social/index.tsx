@@ -1,8 +1,15 @@
 export { default as iconTwitterOutline } from './twitter-outline.svg';
 export { default as iconInstagramOutline } from './instagram-outline.svg';
 export { default as iconSiteOutline } from './site-outline.svg';
+export { default as iconFacebookOutline } from './facebook-outline.svg';
 export { default as iconFacebook } from './facebook.svg';
 export { default as iconInstagram } from './instagram.svg';
 export { default as iconTelegram } from './telegram.svg';
 export { default as iconReddit } from './reddit.svg';
 export { default as iconDiscord } from './discord.svg';
+export { ReactComponent as Site } from './icon-site.svg';
+export { ReactComponent as Medium } from './icon-medium.svg';
+export { ReactComponent as Instagram } from './icon-instagram.svg';
+export { ReactComponent as Telegram } from './icon-telegram.svg';
+export { ReactComponent as Twitter } from './icon-twitter.svg';
+export { ReactComponent as Discord } from './icon-discord.svg';

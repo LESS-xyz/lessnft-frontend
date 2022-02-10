@@ -1,0 +1,71 @@
+@import '../../styles/helpers.scss';
+
+.collectionCard {
+  position: relative;
+  border: 1px solid $color-neutral-20;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  height: 100%;
+  border-radius: $border-radius;
+  @include flexbox(center, flex-start);
+  flex-direction: column;
+}
+
+.imageWrapper {
+  overflow: hidden;
+  transition: $transition;
+  position: relative;
+  height: 200px;
+  width: 100%;
+}
+
+.imageBanner {
+  width: 100%;
+  border-radius: $border-radius $border-radius 0 0;
+  height: 100%;
+  object-fit: cover;
+}
+
+.imageMain {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  top: calc(200px - 24px);
+  left: calc(50% - 24px);
+  border-radius: 50%;
+  z-index: 1000;
+}
+
+.collectionCardInfo {
+  padding: 32px 16px 16px;
+  width: 100%;
+  line-height: 1.5;
+
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  p {
+    @include multiplyRowsEllipsis(4);
+  }
+}
+
+.name,
+.user,
+.description,
+.number {
+  text-align: center;
+}
+
+.userLink {
+  color: $color-primary;
+}
+
+.user {
+  margin-bottom: 15px;
+}
+
+.description {
+  flex-grow: 1;
+  margin-bottom: 10px;
+}

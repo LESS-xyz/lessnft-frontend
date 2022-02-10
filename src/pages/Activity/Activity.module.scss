@@ -59,6 +59,9 @@
   height: 42px;
 
   svg {
+    position: absolute;
+    top: calc(50% - 10px);
+    left: calc(50% - 10px);
     circle {
       fill: transparent;
     }

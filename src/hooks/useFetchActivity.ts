@@ -23,11 +23,11 @@ export const useFetchActivity = (setLoading: (value: boolean) => void) => {
     activityApi
       .getActivity(page, selectedFilters)
       .then(({ data }: any) => {
-        setTotalItems(data.total_items);
+        setTotalItems(data.total);
         if (refresh) {
-          setItems(data.items);
+          setItems(data.results);
         } else {
-          setItems((prev: any) => [...prev, ...data.items]);
+          setItems((prev: any) => [...prev, ...data.results]);
         }
       })
       .finally(() => {

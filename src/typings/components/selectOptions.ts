@@ -1,53 +1,18 @@
-// const tabs = [
-//   {
-//     title: 'Featured',
-//     icon: burn,
-//   },
-//   {
-//     title: 'All Items',
-//     icon: allCategory,
-//   },
-//   {
-//     title: 'Art',
-//     icon: art,
-//   },
-//   {
-//     title: 'Photography',
-//     icon: camera,
-//   },
-//   {
-//     title: '3D',
-//     icon: threeD,
-//   },
-//   {
-//     title: 'Motion',
-//     icon: motion,
-//   },
-// ];
-
 export const selectOptions = [
-  {
-    label: 'Newest',
-    value: '-date',
-  },
-  {
-    label: 'Latest',
-    value: 'date',
-  },
-  {
-    label: 'Highest price',
-    value: '-price',
-  },
-  {
-    label: 'Lowest price',
-    value: 'price',
-  },
-  {
-    label: 'Most liked',
-    value: '-likes',
-  },
-  {
-    label: 'Least liked',
-    value: 'likes',
-  },
+  { value: '-created_at', label: 'Recently Created' },
+  { value: 'created_at', label: 'Oldest' },
+  { value: '-price', label: 'Highest Price' },
+  { value: 'price', label: 'Lowest Price' },
+  { value: '-likes', label: 'Most Likes' },
+  { value: 'likes', label: 'Less Likes' },
+  { value: '-views', label: 'Most Views' },
+  { value: 'views', label: 'Less Views' },
+  { value: '-sale', label: 'Recently Sold' },
+  { value: 'sale', label: 'Oldest Sale' },
+  { value: '-transfer', label: 'Recently Transfered' },
+  { value: 'transfer', label: 'Oldest Transfer' },
+  { value: '-auction_end', label: 'Recently Auction Ended' },
+  { value: 'auction_end', label: 'Last Auction End' },
+  { value: '-last_sale', label: 'Recently Last Sale' },
+  { value: 'last_sale', label: 'Oldest Last Sale' },
 ];

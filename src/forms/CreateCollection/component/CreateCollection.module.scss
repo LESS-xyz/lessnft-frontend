@@ -46,6 +46,9 @@
 
   @include forTablet {
     margin-left: 0;
+    .file{
+      @include flexbox(center, center)
+    }
   }
 
   .file {

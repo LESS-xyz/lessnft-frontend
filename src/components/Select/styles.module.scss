@@ -53,7 +53,7 @@
 :root {
   .select .control {
     box-sizing: border-box;
-    min-width: 140px;
+    min-width: 156px;
     height: 40px;
     background: none;
     border: 2px solid $color-neutral-10;
@@ -69,10 +69,6 @@
     }
 
     &.open {
-      // border-bottom-left-radius: 0;
-      // border-bottom-right-radius: 0;
-      // background-color: $color-light-green;
-      // box-shadow: $box-shadow;
       &.dark {
         // background-color: $color-black;
         // border: 1px solid $color-black;
@@ -96,6 +92,7 @@
     font-weight: 500;
     position: relative;
     color: $color-neutral-80;
+    max-width: calc(100% - 2px);
     top: 12px;
   }
 }
@@ -122,7 +119,7 @@
   }
 
   &.m {
-    padding: 0px 20px;
+    padding: 0px 16px;
 
     height: 44px;
   }
@@ -157,19 +154,24 @@
 }
 
 :root .menu {
-  border: 2px solid $color-neutral-20;
+  border-radius: $border-radius;
+  overflow: hidden;
 }
 
 :root .menuList {
   padding-top: 0;
   padding-bottom: 0;
-  overflow: hidden;
+  overflow-Y: scroll;
+  max-height: 276px;
+
 }
 
 :root .option {
   @include flexbox(center, flex-start);
-  margin: -2px 0;
+  // margin: -2px 0;
   padding: 10px 20px;
+
+  font-weight: 400;
 
   background-color: none;
   transition: $transition;
@@ -189,7 +191,7 @@
 :root .optionText,
 :root .noOptionsMessage {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .indicatorsContainer {

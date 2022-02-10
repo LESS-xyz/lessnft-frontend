@@ -1,0 +1,5 @@
+@import 'src/styles/helpers.scss';
+
+.item {
+  @include flexbox(center, space-between);
+}

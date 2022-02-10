@@ -1,5 +1,5 @@
 import { FC, useCallback, useRef, useState } from 'react';
-import { Close, Zoom, IconLock } from 'assets/img';
+import { Close, IconLock, Zoom } from 'assets/img';
 import cx from 'classnames';
 import { EllipsisText, H2, Skeleton, Text } from 'components';
 import { useGetUserAccessForNft, useNoScroll } from 'hooks';
@@ -177,18 +177,24 @@ const GiantCard: FC<Props> = ({ isFetching, className, nft, onUpdateNft }) => {
           isWrongChain={isWrongChain}
           isUserCanChangePrice={isUserCanChangePrice}
         />
-        {!isWrongChain ? (
-          <PaymentComponent
-            nft={nft}
-            onUpdateNft={onUpdateNft}
-            isUserCanEndAuction={isUserCanEndAuction}
-            isUserCanBuyNft={isUserCanBuyNft}
-            isUserCanEnterInAuction={isUserCanEnterInAuction}
-            isUserCanPutOnSale={isUserCanPutOnSale}
-            isOwner={isOwner}
-          />
-        ) : null}
-        <AuthorComponent creator={nft?.creator} owners={nft?.owners} />
+        {(isUserCanEndAuction ||
+          isUserCanBuyNft ||
+          isUserCanEnterInAuction ||
+          isUserCanPutOnSale ||
+          nft?.selling) &&
+          !isWrongChain && (
+            <PaymentComponent
+              nft={nft}
+              onUpdateNft={onUpdateNft}
+              isUserCanEndAuction={isUserCanEndAuction}
+              isUserCanBuyNft={isUserCanBuyNft}
+              isUserCanEnterInAuction={isUserCanEnterInAuction}
+              isUserCanPutOnSale={isUserCanPutOnSale}
+              isOwner={isOwner}
+              className={styles.payment}
+            />
+          )}
+        <AuthorComponent creator={nft?.creator} owners={nft?.owners} collection={nft?.collection} />
         {nft?.has_digital_key && !isUserCanSeeUnlockableContent && (
           <div className={styles.unlockButton}>
             <IconLock />

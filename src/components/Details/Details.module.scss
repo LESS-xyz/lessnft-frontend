@@ -1,0 +1,106 @@
+@import 'src/styles/helpers';
+
+.iconWrapper {
+  margin: 10px 0;
+
+  @include flexbox;
+
+  svg {
+    rect {
+      fill: $color-primary;
+    }
+  }
+}
+
+.header {
+  @include flexbox(flex-start, space-between);
+  opacity: 0.7;
+}
+.swap {
+  .wrapper {
+    text-align: left;
+
+    .input {
+      margin-top: 8px;
+    }
+  }
+}
+
+.top {
+  margin-bottom: 8px;
+  &Left {
+    padding-left: 56px;
+  }
+}
+
+.body {
+  @include flexbox(flex-start, center);
+  flex-direction: row;
+
+  .addMore {
+    color: $color-primary;
+    border-color: $color-primary;
+    margin-top: 24px;
+  }
+}
+
+.left + .right {
+  margin-left: 17px;
+}
+
+.btns {
+  @include flexbox(flex-start, center);
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid $color-neutral-60;
+}
+
+.button {
+  width: 100%;
+
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
+}
+
+.input {
+  & + & {
+    margin-top: 24px;
+  }
+}
+
+.prefix {
+  @include flexbox(center, flex-start);
+  padding-left: 16px;
+  width: 52px;
+  height: 38px;
+  border-right: 2px solid $color-neutral-40;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.bottom {
+  &Item {
+    @include flexbox(center, flex-start);
+
+    & + & {
+      margin-top: 24px;
+    }
+  }
+
+  &Double,
+  &First {
+    @include flexbox(center, flex-start);
+    input {
+      max-width: 62px;
+    }
+  }
+
+  &Double {
+    flex-direction: column;
+  }
+
+  .of {
+    margin: 0 10px;
+  }
+}

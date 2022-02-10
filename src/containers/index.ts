@@ -6,3 +6,4 @@ export { default as LoadMore } from './LoadMore';
 export { default as Popover } from './Popover';
 export { default as FallbackImage } from './ImageWithFallback';
 export { default as Footer } from './Footer';
+export { default as Page } from './Page';

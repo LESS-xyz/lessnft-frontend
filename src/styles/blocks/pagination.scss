@@ -1,0 +1,16 @@
+@import '/src/styles/helpers.scss';
+
+.rc-pagination-item-active {
+  border-color: $color-primary !important;
+  a {
+    color: $color-primary !important;
+  }
+}
+
+.rc-pagination-item:focus,
+.rc-pagination-item:hover {
+  border-color: rgba($color-primary, 0.9) !important;
+  a {
+    color: rgba($color-primary, 0.9) !important;
+  }
+}

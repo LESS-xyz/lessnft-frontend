@@ -1,4 +1,5 @@
 @import 'src/styles/helpers';
+@import 'src/styles/mixins/media.scss';
 
 .ourArtworkGallery {
   @include container;
@@ -17,15 +18,16 @@
 
 .cardsWrapper {
   margin-top: 40px;
-  @include flexbox(flex-start, space-between);
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+
+  margin-bottom: 20px;
 }
 
 .howItWorksCard {
   @include flexbox(center, flex-start);
   flex-direction: column;
-
-  width: 292px;
 }
 
 .viewMoreBtnWrapper {
@@ -41,8 +43,9 @@
     padding-top: 20px;
   }
 
-  .howItWorksCard {
-    margin-bottom: 70px;
+  .cardsWrapper {
+    gap: 40px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   }
 }
 
@@ -50,4 +53,8 @@
   margin: 0 auto;
   max-width: 200px;
   display: block;
+
+  @include b(mobile) {
+    margin-top: 24px;
+  }
 }

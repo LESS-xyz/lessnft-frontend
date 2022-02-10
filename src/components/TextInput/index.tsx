@@ -11,11 +11,12 @@ import styles from './TextInput.module.scss';
 interface Props {
   className?: string;
   label?: string | JSX.Element;
+  subtitle?: string | JSX.Element;
   name?: string;
   type: string;
   placeholder: string;
   required?: boolean;
-  prefix?: string;
+  prefix?: string | JSX.Element;
   suffix?: any;
   suffixClassName?: string;
   prefixClassName?: string;
@@ -31,6 +32,7 @@ interface Props {
   moreThanZero?: boolean;
   max?: number;
   min?: number;
+  onButtonClick?: () => void;
 }
 
 const TextInput: React.FC<Props> = ({
@@ -39,6 +41,7 @@ const TextInput: React.FC<Props> = ({
   moreThanZero = false,
   className,
   label,
+  subtitle,
   suffix,
   onChange,
   value,
@@ -53,6 +56,7 @@ const TextInput: React.FC<Props> = ({
   max,
   min,
   type,
+  onButtonClick,
   ...props
 }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -139,6 +143,11 @@ const TextInput: React.FC<Props> = ({
           {label}
         </Text>
       )}
+      {subtitle && (
+        <Text className={styles.subtitle} size="s" weight="medium" color="middleGray">
+          {subtitle}
+        </Text>
+      )}
       {icon && <img src={icon} alt="" className={styles.icon} />}
       <div className={styles.wrap}>
         {prefixElement}
@@ -157,7 +166,10 @@ const TextInput: React.FC<Props> = ({
           }
         />
         {isButton && (
-          <Button className={styles.inputButton}>
+          <Button
+            onClick={onButtonClick ? () => onButtonClick() : () => {}}
+            className={styles.inputButton}
+          >
             <img src={arrowLeft} alt="" />
           </Button>
         )}

@@ -1,4 +1,4 @@
-@import "src/styles/helpers";
+@import 'src/styles/helpers';
 
 .container {
   // TODO: Place your component styles here
@@ -9,6 +9,7 @@
   @include flexbox;
   width: fit-content;
   border-radius: 16px;
+  background: $color-bg;
 
   & > img {
     margin-right: 3px;
@@ -30,26 +31,26 @@
 }
 
 .Featured,
-.New{
+.New {
   background: $color-actions-dark-red;
   color: $color-actions-red;
   background: $color-bg;
 }
 
 .Collections,
-.Music{
+.Music {
   background: $color-actions-dark-yellow;
   color: $color-actions-light-yellow;
   background: $color-bg;
 }
 
-.Art{
+.Art {
   background: $color-actions-dark-purple;
   color: $color-actions-light-purple;
   background: $color-bg;
 }
 
-.DomainNames{
+.DomainNames {
   background: $color-actions-dark-blue;
   color: $color-actions-light-blue;
   background: $color-bg;

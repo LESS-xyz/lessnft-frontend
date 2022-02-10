@@ -15,6 +15,13 @@ const Seller = types.model({
   quantity: types.number,
 });
 
+const Detail = types.model({
+  display_type: types.string,
+  trait_type: types.string,
+  value: types.union(types.string, types.number),
+  max_value: types.union(types.string, types.number),
+});
+
 const NftForSale = types.model({
   tokenId: types.optional(types.number, 0),
   standart: types.optional(types.string, ''),
@@ -36,7 +43,7 @@ const NftForSale = types.model({
     id: 0,
     name: '',
   }),
-  sellers: types.optional(types.array(Seller), [])
+  sellers: types.optional(types.array(Seller), []),
 });
 
 const PlaceBid = types
@@ -164,9 +171,9 @@ const PutOnSale = types
       const parent: any = getParent(self);
       if (
         parent.nft.tokenId &&
-        parent.nft.currency &&
-        parent.nft.royalty &&
-        parent.nft.fee &&
+        // parent.nft.currency &&
+        // parent.nft.royalty &&
+        // parent.nft.fee &&
         parent.nft.collection &&
         self.isOpen
       ) {
@@ -366,6 +373,37 @@ const Change = types
       },
     };
   });
+const Details = types
+  .model({
+    type: types.optional(types.string, ''),
+    text: types.optional(types.string, ''),
+    detailsItems: types.optional(types.array(Detail), [
+      { display_type: '', trait_type: '', value: '', max_value: 5 },
+    ]),
+    isOpen: types.optional(types.boolean, false),
+  })
+  .views((self) => ({
+    get getIsOpen() {
+      return !!self.type;
+    },
+    get getItems() {
+      return self.detailsItems;
+    },
+  }))
+  .actions((self) => {
+    return {
+      close: () => {
+        self.type = '';
+      },
+      open: (type: '' | 'Properties' | 'Rankings' | 'Stats', text: string) => {
+        self.type = type;
+        self.text = text;
+      },
+      save: (det: any) => {
+        self.detailsItems = det;
+      },
+    };
+  });
 
 export const Modals = types.model({
   sell: SellModals,
@@ -375,4 +413,5 @@ export const Modals = types.model({
   report: Report,
   change: Change,
   swap: Swap,
+  details: Details,
 });

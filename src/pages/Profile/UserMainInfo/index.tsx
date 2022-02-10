@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { routes, zeroAddress } from 'appConstants';
 import {
   iconAddBlack,
-  iconEdit,
+  IconEdit,
   iconSettingsWhite,
   profile_avatar_example,
   profile_page_bg_example,
@@ -112,7 +112,7 @@ const UserMainInfo: FC<IProps> = observer(({ userId, setCurrentUser }) => {
                 isLoading={isFileLoading}
               >
                 <div className={s.user_button}>
-                  <img src={iconEdit} alt="" />
+                  <IconEdit />
                   <Text tag="span" color="white" weight="medium" className={s.user_edit}>
                     Edit Banner
                   </Text>

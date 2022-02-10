@@ -15,6 +15,34 @@
   }
 }
 
+.properties {
+  margin-top: 44px;
+  margin-bottom: 24px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+
+  @include forDesktopMiddle {
+    display: block;
+  }
+
+  &.onlyHistory {
+    display: block;
+  }
+}
+.history {
+  @include forDesktopMiddle {
+    margin-top: 24px;
+  }
+}
+
+.propsSections {
+  display: grid;
+  gap: 24px;
+  grid-auto-rows: min-content;
+}
+
 .loader {
   transform: scale(1.5);
   margin: 20px auto;

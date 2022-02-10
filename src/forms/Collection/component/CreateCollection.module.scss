@@ -1,0 +1,388 @@
+@import 'src/styles/helpers';
+
+.form {
+  @include flexbox(center, space-between);
+  flex-direction: column;
+}
+
+.column {
+  width: 50%;
+
+  @include forDesktopBig {
+    width: 100%;
+  }
+
+  &Upload {
+    @include forDesktopBig {
+      position: static;
+    }
+  }
+}
+
+.preview {
+  position: absolute;
+  top: 0;
+  right: 80px;
+  flex-shrink: 0;
+  width: 352px;
+}
+
+.cover {
+  &Preview {
+    height: 240px;
+    object-fit: scale-down;
+  }
+}
+
+.item {
+  .previewImg {
+    position: relative;
+    width: 192px;
+    height: 192px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    margin-bottom: 32px;
+
+    display: flex;
+    justify-content: center;
+
+    & img {
+      width: 100%;
+    }
+
+    .clearPreview {
+      position: absolute;
+      right: 0px;
+      @include flexbox;
+
+      width: 30px;
+      height: 30px;
+
+      background: $color-neutral-0;
+      border: 1px solid $color-actions-light-pink;
+
+      img {
+        transition: transform 0.2s;
+      }
+
+      &:hover {
+        img {
+          transform: rotate(90deg);
+        }
+      }
+    }
+
+    video {
+      width: 100%;
+    }
+  }
+}
+
+.upload {
+  &Subtitle {
+    margin-bottom: 32px;
+  }
+}
+
+.note {
+  margin-top: 4px;
+
+  line-height: 160%;
+}
+
+.file {
+  position: relative;
+  cursor: pointer;
+
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 400px;
+
+  background: $color-neutral-10;
+  border: 1px dashed $color-neutral-100;
+
+  border-radius: $border-radius;
+
+  input[type='file'],
+  input[type='file']::-webkit-file-upload-button {
+    cursor: pointer;
+  }
+
+  @include forDesktopSm {
+    height: 232px;
+  }
+
+  margin-bottom: 32px;
+
+  .capture {
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    @include flexbox(center, center);
+
+    width: 100%;
+    flex-direction: column;
+  }
+  .icon {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto;
+  }
+
+  &Logo {
+    width: 192px;
+    height: 192px;
+    border-radius: 50%;
+  }
+
+  &Banner {
+    height: 170px;
+  }
+}
+
+.load {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  font-size: 400px;
+
+  opacity: 0;
+}
+
+.icon {
+  margin-bottom: 10px;
+
+  width: 24px;
+  height: 24px;
+}
+
+.format {
+  margin-top: 10px;
+
+  line-height: 120%;
+  letter-spacing: 0.03em;
+}
+
+.category {
+  line-height: 160%;
+}
+
+.fieldset {
+  margin-top: 32px;
+  margin-bottom: 72px;
+
+  &_first {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  &Title {
+    @include flexbox(center, space-between);
+    @include epilogue;
+  }
+
+  &Row {
+    margin-top: 32px;
+    @include flexbox(flex-start);
+    @include forDesktopMiddle {
+      @include flexbox(flex-start, space-between);
+      flex-wrap: wrap;
+    }
+  }
+
+  .field {
+    margin-top: 32px;
+  }
+}
+
+.fieldsetRowColumn {
+  & + & {
+    margin-left: 12px;
+    max-width: 102px;
+    @include forDesktopMiddle {
+      margin: 32px 0 0;
+      max-width: unset;
+      width: 100%;
+    }
+  }
+}
+
+.label {
+  @include epilogue;
+  margin-bottom: 8px;
+
+  line-height: 160%;
+  text-transform: capitalize;
+
+  color: $color-neutral-100;
+  opacity: 0.7;
+}
+
+.btns {
+  margin-top: 32px;
+  @include flexbox(center, space-between);
+  @include forDesktopSm {
+    flex-direction: column;
+  }
+}
+
+.button {
+  @include epilogue;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 160%;
+}
+
+.submitBtn {
+  max-width: 410px;
+  width: 100%;
+}
+
+.cancelBtn {
+  color: $color-state-error;
+  padding: 0 !important;
+  @include forDesktopSm {
+    margin-top: 16px;
+  }
+}
+
+.btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  @include flexbox;
+  &_add {
+    border-color: $color-actions-dark-green;
+    transition: all 0.2s ease;
+    &:hover {
+      background: $color-actions-dark-green;
+      svg {
+        path {
+          fill: $color-neutral-0;
+        }
+      }
+
+      transition: all 0.2s ease;
+    }
+  }
+  &_remove {
+    border-color: $color-actions-light-grey;
+    background: $color-actions-light-grey;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: $color-actions-red;
+
+      transition: all 0.2s ease;
+    }
+  }
+}
+
+.clean {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.suffix {
+  color: $color-neutral-100;
+}
+
+.themes {
+  &Wrapper {
+    margin-top: 8px;
+    @include flexbox;
+
+    @include m {
+      flex-direction: column;
+    }
+  }
+
+  .theme {
+    position: relative;
+    @include flexbox(center, flex-start);
+    flex-direction: column;
+    padding: 20px 10px;
+    border-radius: $border-radius;
+    border: 1px solid $color-neutral-60;
+    height: 240px;
+    cursor: pointer;
+
+    &Title {
+      margin-top: 32px;
+    }
+    &Title,
+    &Text {
+      text-align: center;
+    }
+
+    @include m {
+      width: 100%;
+    }
+  }
+
+  .active {
+    border-color: $color-primary;
+  }
+}
+
+.check {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+}
+
+.theme + .theme {
+  margin-left: 16px;
+
+  @include m {
+    margin-left: 0px;
+    margin-top: 16px;
+  }
+}
+
+.explicit {
+  @include flexbox(center, space-between);
+  margin-top: 32px;
+}
+
+.socials {
+  border: 1px solid $color-neutral-60;
+  border-radius: $border-radius;
+  margin-bottom: 32px;
+}
+
+.social {
+  padding: 0 20px;
+  &:not(:first-child) {
+    border-top: 1px solid $color-neutral-60;
+  }
+  @include flexbox(center, flex-start);
+
+  .socialInput {
+    width: 100%;
+    input {
+      border: none;
+      padding-left: 0 !important;
+
+      &:hover {
+        box-shadow: none;
+      }
+    }
+    .socialPrefix {
+      transform: none;
+      position: relative;
+      padding-left: 16px;
+    }
+  }
+}

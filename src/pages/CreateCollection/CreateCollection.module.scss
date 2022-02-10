@@ -1,0 +1,42 @@
+@import 'src/styles/helpers';
+
+.upload {
+}
+
+.head {
+  @include flexbox(center);
+  padding: 44px 0;
+  flex-direction: column;
+  gap: 16px;
+  @include sora;
+  border-bottom: 1px solid $color-neutral-10;
+
+  button {
+    width: 172px;
+  }
+
+  @include forTablet {
+    padding: 44px 32px;
+  }
+}
+
+.title {
+  line-height: 120%;
+}
+
+.switch {
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.info {
+  line-height: 160%;
+  font-family: 'Epilogue', 'sans-serif';
+}
+
+.container {
+  @include container;
+  position: relative;
+  margin-top: 44px;
+  margin-bottom: 44px;
+}

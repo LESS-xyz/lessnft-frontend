@@ -14,7 +14,6 @@ interface IProps {
   page: number;
   allPages: number;
   handlePage: (value: number) => void;
-  isFiltersLoading: boolean;
   isNftsLoading: boolean;
   totalItems: number;
   orderByFilter: OptionType;
@@ -27,19 +26,13 @@ const Artworks: FC<IProps> = ({
   page,
   allPages,
   handlePage,
-  isFiltersLoading,
   isNftsLoading,
   totalItems,
   orderByFilter,
   handleOrderByFilter,
   nftCards,
 }) => {
-  const anchorRef = useInfiniteScroll(
-    page,
-    allPages,
-    handlePage,
-    isFiltersLoading || isNftsLoading,
-  );
+  const anchorRef = useInfiniteScroll(page, allPages, handlePage, isNftsLoading);
 
   return (
     <>
@@ -51,38 +44,27 @@ const Artworks: FC<IProps> = ({
 
       <div className={s.tab}>
         {nftCards.map((artCard: any) => {
-          const {
-            media,
-            name,
-            price,
-            currency,
-            available,
-            creator,
-            like_count,
-            tags,
-            id,
-            highest_bid,
-            minimal_bid,
-            bids,
-            is_liked,
-          } = artCard;
-          const artPrice = price || (highest_bid && toFixed(highest_bid.amount, 3)) || minimal_bid;
+          const artPrice =
+            artCard.price ||
+            (artCard.highest_bid && toFixed(artCard.highest_bid.amount, 3)) ||
+            artCard.minimal_bid;
           return (
             <ArtCard
-              artId={id}
-              key={id}
-              imageMain={media}
-              name={name}
+              type={artCard?.collection?.display_theme}
+              artId={artCard?.id}
+              key={artCard?.id}
+              imageMain={artCard?.media}
+              name={artCard?.name}
               price={artPrice}
-              asset={currency?.symbol?.toUpperCase() ?? ''}
-              inStockNumber={available}
-              author={creator.name}
-              authorAvatar={creator.avatar}
-              authorId={creator.id}
-              likesNumber={like_count}
-              tags={tags}
-              bids={bids}
-              isLiked={is_liked}
+              asset={artCard?.currency?.symbol?.toUpperCase() ?? ''}
+              inStockNumber={artCard?.available}
+              author={artCard?.creator?.name}
+              authorAvatar={artCard?.creator?.avatar}
+              authorId={artCard?.creator?.id}
+              likesNumber={artCard?.like_count}
+              tags={artCard?.tags}
+              bids={artCard?.bids}
+              isLiked={artCard?.is_liked}
               likeAction={likeAction}
             />
           );

@@ -6,3 +6,7 @@
 
 // global classes
 @import './blocks/index';
+
+.grecaptcha-badge {
+  display: none !important;
+}

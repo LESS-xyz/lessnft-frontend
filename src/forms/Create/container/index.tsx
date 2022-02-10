@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 
 import CreateForm, { ICreateForm } from '../component';
 import { routes } from 'appConstants';
+import { dateFormatter } from 'utils/dateFormatter';
 
 export default observer(({ isSingle }: any) => {
   const history = useHistory();
@@ -36,6 +37,11 @@ export default observer(({ isSingle }: any) => {
     isLoading: false,
     unlockOncePurchased: false,
     digitalKey: '',
+    isTimedAuction: false,
+    startAuction: 'Right after listing',
+    endAuction: '1 Day',
+    externalLink: '',
+    isNsfw: false,
   };
   const FormWithFormik = withFormik<any, ICreateForm>({
     enableReinitialize: true,
@@ -54,6 +60,7 @@ export default observer(({ isSingle }: any) => {
         then: Yup.number().min(0.0001),
       }),
       creatorRoyalty: Yup.number().min(0, 'Minimal royalties equal to 0!').max(80, 'Too much!'),
+      externalLink: Yup.string().url(),
     }),
     handleSubmit: (values, { setFieldValue }) => {
       setFieldValue('isLoading', true);
@@ -64,7 +71,7 @@ export default observer(({ isSingle }: any) => {
       if (!isSingle) {
         formData.append('total_supply', values.totalSupply.toString());
       }
-      formData.append('currency', values.currency);
+      formData.append('currency', 'less');
       if (values.description) {
         formData.append('description', values.description);
       }
@@ -75,16 +82,24 @@ export default observer(({ isSingle }: any) => {
       }
       formData.append('creator_royalty', values.creatorRoyalty.toString());
       formData.append('collection', values.collection.toString());
-
-      if (values.details[0].name) {
-        const details: any = {};
-        values.details.forEach((item) => {
-          if (item.name) {
-            details[item.name] = item.amount;
-          }
-        });
-        formData.append('details', JSON.stringify(details));
+      if (values.isTimedAuction) {
+        formData.append('start_auction', dateFormatter(values.startAuction));
+        formData.append('end_auction', dateFormatter(values.endAuction));
       }
+      formData.append('external_link', values.externalLink);
+      formData.append('is_nsfw', values.isNsfw.toString());
+
+      // if (values.details[0].name) {
+      const details: any = values.details.filter(
+        (item: any) => item.display_type && item.trait_type && item.value && item.max_value,
+      );
+      //   values.details.forEach((item) => {
+      //     if (item.name) {
+      //       details[item.name] = item.amount;
+      //     }
+      //   });
+      formData.append('details', JSON.stringify(details));
+      // }
       // TODO: change selling from always true
       formData.append('selling', values.selling.toString());
 

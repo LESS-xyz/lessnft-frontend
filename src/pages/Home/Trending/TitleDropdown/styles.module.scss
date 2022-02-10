@@ -1,0 +1,105 @@
+@import '../../../../styles/helpers';
+
+.titleDropdown {
+  position: relative;
+  width: fit-content;
+}
+
+.gradientValue {
+  @include gradientText;
+}
+
+.selected {
+  @include flexbox(center, flex-start);
+  cursor: pointer;
+  outline: none;
+
+  &Img {
+    margin-left: 12px;
+    padding: 16px 14px;
+    border: 1px solid $color-neutral-10;
+    border-radius: 100%;
+    transition: transform 0.3s ease-in-out;
+
+    &Open {
+      transform: rotate(0.5turn);
+      transition: transform 0.3s ease-in-out;
+    }
+  }
+}
+
+.triangle {
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  border: 16px solid transparent;
+  border-bottom: 16px solid $color-neutral-0;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.dropdownContainer {
+  position: relative;
+}
+
+.selectionWrapper {
+  position: absolute;
+  z-index: 999;
+  top: 60px;
+  background: $color-bg;
+  border-radius: 2px;
+  left: 50%;
+  opacity: 0;
+  transform: translate(-47.5%, 0);
+  pointer-events: none;
+  color: $color-neutral-80;
+  @include box-shadow($y: 16px);
+}
+
+.body {
+  padding: 20px;
+  li:first-child {
+    padding-bottom: 12px;
+  }
+  li:not(:first-child) {
+    padding-top: 16px;
+    padding-bottom: 12px;
+    border-top: 1px solid $color-neutral-60;
+  }
+  li:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.activeDropdown {
+  transition: $transition;
+  opacity: 1;
+  pointer-events: all;
+
+  border-radius: $border-radius;
+}
+
+.option {
+  width: 208px;
+  cursor: pointer;
+  white-space: nowrap;
+  color: $color-neutral-80;
+  @include epilogue;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 160%;
+  -webkit-text-fill-color: $color-neutral-80;
+  text-align: left;
+  &:hover {
+    -webkit-text-fill-color: $color-action-hovered;
+  }
+  &:active {
+    -webkit-text-fill-color: $color-action-pressed;
+  }
+
+  &Icon {
+    margin-right: 10px;
+  }
+}

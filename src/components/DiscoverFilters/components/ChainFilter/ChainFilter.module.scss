@@ -1,0 +1,35 @@
+@import '/src/styles/helpers.scss';
+
+.chain {
+  padding: 9px 16px;
+  border: 2px solid $color-neutral-10;
+  border-radius: $border-radius;
+  width: 100%;
+
+  @include flexbox(center, flex-start);
+
+  & + & {
+    margin-top: 12px;
+  }
+
+  &:hover,
+  &.active {
+    background: $color-neutral-10;
+  }
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+
+  background-color: $color-neutral-10;
+  border-radius: 50%;
+  @include flexbox(center, center);
+
+  img {
+    width: 15px;
+    height: 15px;
+  }
+
+  margin-right: 5px;
+}

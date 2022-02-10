@@ -3,7 +3,7 @@ import { IExtendedInfo } from 'typings';
 import styles from './About.module.scss';
 import { H3, Text } from 'components';
 import {
-  iconFacebook,
+  iconFacebookOutline,
   iconInstagramOutline,
   iconSiteOutline,
   iconTwitterOutline,
@@ -84,7 +84,7 @@ const About: FC<IProps> = (props) => {
                 rel="noopener noreferrer"
                 className={styles.social}
               >
-                <img src={iconFacebook} alt="twitter" width={16} height={16} />
+                <img src={iconFacebookOutline} alt="twitter" width={16} height={16} />
                 <Text size="m">@{currentUser.facebook}</Text>
               </a>
             </li>

@@ -53,6 +53,7 @@ export interface IBaseInfo {
   avatar: string;
   id: number;
   name: string;
+  display_theme: 'Padded' | 'Contained' | 'Covered';
 }
 
 export interface IBidder {
@@ -70,6 +71,20 @@ export interface IOwner extends Omit<IBaseInfo, 'address'> {
   currency: ICurrency;
 }
 
+export interface INftProperty {
+  value: string;
+  max_value: string;
+  trait_type: string;
+  display_type: string;
+  frequency: number;
+}
+
+export interface INftStat {
+  value: number | string;
+  max_value: number | string;
+  display_type: string;
+  trait_type: string;
+}
 export interface INft {
   USD_price: number;
   available: number;
@@ -109,15 +124,32 @@ export interface INft {
   network: {
     name: string;
     native_symbol: string;
+    ipfs_icon: string;
+    short_name: string | null;
   };
   currency_service_fee: number;
   views: number;
+  start_auction: TNullable<string>;
+  end_auction: TNullable<string>;
   has_digital_key: boolean;
+  is_timed_auc_selling: boolean;
+  properties: { [key: string]: INftProperty };
+  stats: Array<INftStat>;
+  rankings: Array<INftStat>;
 }
 
 export interface ITag {
-  media: string;
-  value: string;
+  icon: string;
+  image: string;
+  title: string;
+}
+
+export interface INotableDrop {
+  image: string;
+  description: string;
+  collection_id: string;
+  name: string;
+  background_color: string | null;
 }
 
 export type TNullable<T> = T | null;

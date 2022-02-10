@@ -1,9 +1,8 @@
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { Header } from 'components';
-import { Footer, Modals, Routes, ScrollToTop } from 'containers';
-import { useFetchTags } from 'hooks';
+import { Modals, Routes, ScrollToTop } from 'containers';
+import { useFetchTags, useFetchNetworks } from 'hooks';
 
 import Connector from './services/walletConnect';
 import { Provider, rootStore } from './store';
@@ -13,6 +12,8 @@ import './styles/app.scss';
 
 const App = () => {
   useFetchTags();
+  useFetchNetworks();
+
   return (
     <>
       <ToastContainer limit={3} pauseOnFocusLoss={false} />
@@ -21,16 +22,13 @@ const App = () => {
         language="en"
       >
         <Provider value={rootStore}>
-          <Router>
-            <Connector>
-              <Header />
-              <ScrollToTop>
-                <Routes />
-                <Modals />
-              </ScrollToTop>
-              <Footer />
-            </Connector>
-          </Router>
+          <Connector>
+            <Header />
+            <ScrollToTop>
+              <Routes />
+              <Modals />
+            </ScrollToTop>
+          </Connector>
         </Provider>
       </GoogleReCaptchaProvider>
     </>

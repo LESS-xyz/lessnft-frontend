@@ -1,8 +1,7 @@
 /* eslint-disable react/no-array-index-key */
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import cx from 'classnames';
-import { H2, Text } from 'components';
-import { activityApi } from 'services';
+import { Button, H2, Text } from 'components';
 import { OptionType } from 'typings';
 
 import CollectionCard from './CollectionCard';
@@ -10,6 +9,8 @@ import TitleDropdown from './TitleDropdown';
 
 import styles from './styles.module.scss';
 import BigNumber from 'bignumber.js';
+import { useFetchTopCollections } from 'hooks';
+import { routes } from 'appConstants';
 
 type Props = {
   className?: string;
@@ -29,18 +30,8 @@ const dropDownOptions: OptionType[] = [
   },
 ];
 const TopCollections: FC<Props> = ({ className }) => {
-  const [collections, setCollections] = useState<any[]>([]);
   const [period, setPeriod] = useState<OptionType>(dropDownOptions[0]);
-  const fetchTopCollections = useCallback(() => {
-    //TODO: add fetchTopCollections request
-    activityApi
-      .getTopCollections({ type: 'seller', sortPeriod: period.value })
-      .then(({ data }: any) => setCollections(data));
-  }, [period.value]);
-
-  useEffect(() => {
-    fetchTopCollections();
-  }, [fetchTopCollections]);
+  const { collections } = useFetchTopCollections(period);
   return (
     <div className={cx(styles.topCollections, className)}>
       <H2 className={styles.title} align="center">
@@ -68,13 +59,16 @@ const TopCollections: FC<Props> = ({ className }) => {
               />
             ))}
           </ol>
+
+          <Button className={styles.goRankingBtn} href={routes.topNfts.link(period.value)}>
+            Go to Rankings
+          </Button>
         </div>
       ) : (
-        <Text size='xl' className={styles.noItems}>
+        <Text size="xl" className={styles.noItems}>
           There are no collections for this period of time, but you can choose a longer period
         </Text>
       )}
-      {/*<Button className={styles.goRankingBtn}>Go to Rankings</Button>*/}
     </div>
   );
 };

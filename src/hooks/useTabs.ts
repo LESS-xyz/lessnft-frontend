@@ -7,7 +7,13 @@ const useTabs = (allTabs: any[], initialTab?: string) => {
 
   useEffect(() => {
     const currentSearch = location.search;
-    const currentTab = currentSearch.slice(currentSearch.indexOf('=') + 1);
+    let currentTab = '';
+    if (currentSearch.includes('filter')) {
+      currentTab = currentSearch.replace(/^(.*?filter)=/, '');
+    }
+    if (!currentSearch.includes('text')) {
+      currentTab = currentSearch.slice(currentSearch.indexOf('=') + 1);
+    }
     if (currentTab !== activeTab) {
       setActiveTab(currentTab);
     }

@@ -1,0 +1,9 @@
+@import '/src/styles/helpers.scss';
+
+.property {
+  border: 1px solid $color-primary;
+
+  padding: 15px 25px;
+
+  border-radius: $border-radius;
+}

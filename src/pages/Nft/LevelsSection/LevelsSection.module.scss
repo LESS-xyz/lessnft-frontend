@@ -1,0 +1,24 @@
+@import '/src/styles/helpers.scss';
+
+.level {
+  & + & {
+    margin-top: 10px;
+  }
+}
+
+.stat {
+  @include flexbox(center, space-between);
+  margin-bottom: 5px;
+}
+
+.bar {
+  height: 11px;
+  background-color: $color-neutral-10;
+  border-radius: $border-radius;
+}
+
+.bar_line {
+  height: 11px;
+  background-color: $color-primary;
+  border-radius: $border-radius;
+}

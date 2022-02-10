@@ -8,13 +8,14 @@ interface ICheckboxProps {
   content: string;
   value: boolean;
   onChange: () => void;
+  id?: string;
 }
 
-const Checkbox: FC<ICheckboxProps> = ({ className, content, value, onChange }) => {
+const Checkbox: FC<ICheckboxProps> = ({ className, content, value, onChange, id = '' }) => {
   return (
-    <label htmlFor={`toogle_${content}`} className={cn(styles.checkbox, className)}>
+    <label htmlFor={`toogle_${content}-${id}`} className={cn(styles.checkbox, className)}>
       <input
-        id={`toogle_${content}`}
+        id={`toogle_${content}-${id}`}
         className={styles.input}
         type="checkbox"
         onChange={onChange}

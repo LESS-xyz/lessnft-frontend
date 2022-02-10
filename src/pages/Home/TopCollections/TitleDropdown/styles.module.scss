@@ -1,7 +1,6 @@
-@import "../../../../styles/helpers";
+@import '../../../../styles/helpers';
 
 .titleDropdown {
-  @include gradientText;
   position: relative;
   width: fit-content;
 }
@@ -95,4 +94,8 @@
   &:active {
     -webkit-text-fill-color: $color-action-pressed;
   }
+}
+
+.gradientValue {
+  @include gradientText;
 }

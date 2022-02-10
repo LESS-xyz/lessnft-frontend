@@ -10,23 +10,43 @@ type Props = {
   className?: string;
   creator: TOptionable<IBaseInfo>;
   owners?: IOwner | IOwner[] | undefined;
+  collection?: any;
 };
-
-const AuthorComponent: FC<Props> = ({ className, creator, owners }) => {
+const AuthorComponent: FC<Props> = ({ className, creator, owners, collection }) => {
   return (
     <div className={cx(styles.authorBlock, className)}>
-      <div className={styles.user}>
-        <Avatar
-          className={styles.avatar}
-          size="36"
-          id={creator?.id || ''}
-          avatar={creator?.avatar || ''}
-          isVerified={creator?.is_verificated}
-        />
-        <div className={styles.text}>
-          <Text size="xs">Creator</Text>
-          <Text size="xl">{sliceString(creator?.name || '')}</Text>
+      <div>
+        <div className={styles.user}>
+          <Avatar
+            className={styles.avatar}
+            size="36"
+            id={creator?.id || ''}
+            avatar={creator?.avatar || ''}
+            isVerified={creator?.is_verificated}
+          />
+          <div className={styles.text}>
+            <Text size="xs">Creator</Text>
+            <Text size="xl">{sliceString(creator?.name || '')}</Text>
+          </div>
         </div>
+        {collection && !collection.is_default ? (
+          <div className={styles.user}>
+            <Avatar
+              className={styles.avatar}
+              size="36"
+              id={collection?.id || ''}
+              avatar={collection?.avatar || ''}
+              isVerified={false}
+              isCollection
+            />
+            <div className={styles.text}>
+              <Text size="xs">Collection</Text>
+              <Text size="xl">{sliceString(collection?.name || '')}</Text>
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
       {owners && (
         <div className={styles.owners}>

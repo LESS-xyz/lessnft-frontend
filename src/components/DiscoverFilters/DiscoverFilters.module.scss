@@ -1,0 +1,49 @@
+@import '/src/styles/helpers.scss';
+
+.header {
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filters {
+  height: 100%;
+  margin-right: 32px;
+  padding: 20px 20px;
+
+  max-height: 100vh;
+
+  &.active {
+    padding: 0 20px;
+    border-right: 1px solid $color-neutral-10;
+    overflow: auto;
+
+    @include forDesktopSm {
+      padding: 0 10px;
+    }
+  }
+
+  @include forDesktopSm {
+    border-right: none !important;
+    margin-right: 0 !important;
+  }
+}
+
+.hide {
+  @include flexbox(center, normal);
+
+  &_title {
+    display: none;
+    @include forDesktopSm {
+      display: inline-block;
+    }
+  }
+}
+
+.hide_button {
+  transform: rotate(180deg);
+  &.active {
+    transform: rotate(0);
+  }
+}

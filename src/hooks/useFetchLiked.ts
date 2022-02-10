@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { storeApi } from 'services';
 import { INft } from 'typings';
 
-const NUMBER_NFTS_PER_PAGE = 6;
+// const NUMBER_NFTS_PER_PAGE = 6;
 
 interface IProps {
   page: number;
@@ -22,17 +22,17 @@ export const useFetchLiked = (props: IProps): [number, number, INft[], boolean] 
     setIsLoading(true);
     storeApi
       .getLiked(address, page)
-      .then(({ data: { items, total_tokens } }) => {
-        setTotalItems(total_tokens);
+      .then(({ data: { results, total, total_pages } }) => {
+        setTotalItems(total);
         if (refresh) {
-          setNftCards(items);
-        } else if (items) {
-          setNftCards((prev: INft[]) => [...prev, ...items]);
+          setNftCards(results);
+        } else if (results) {
+          setNftCards((prev: INft[]) => [...prev, ...results]);
         }
-        if (!items?.length && refresh) {
+        if (!results?.length && refresh) {
           setNftCards([]);
         }
-        setAllPages(Math.ceil(total_tokens / NUMBER_NFTS_PER_PAGE));
+        setAllPages(Math.ceil(total_pages));
       })
       .finally(() => {
         setIsLoading(false);

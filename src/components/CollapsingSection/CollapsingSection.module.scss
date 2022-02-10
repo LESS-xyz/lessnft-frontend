@@ -1,0 +1,50 @@
+@import '/src/styles/helpers.scss';
+
+.section {
+  border: 1px solid $color-neutral-10;
+  border-radius: $border-radius;
+}
+
+.inner {
+  @include flexbox(center, normal);
+
+  padding: 32px;
+  @include forTablet {
+    padding: 20px;
+  }
+}
+
+.content {
+  padding: 32px;
+  @include forTablet {
+    padding: 20px;
+  }
+}
+
+.header {
+  cursor: pointer;
+  &.active {
+    border-bottom: 1px solid $color-neutral-10;
+  }
+}
+
+.icon {
+  margin-right: 10px;
+
+  svg {
+    max-width: 32px;
+    max-height: 32px;
+  }
+}
+
+.title {
+  flex-grow: 1;
+}
+
+.arrow {
+  transition: 0.4s ease;
+  transform: rotate(180deg);
+  &.active {
+    transform: rotate(0);
+  }
+}

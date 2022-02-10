@@ -20,9 +20,18 @@ const helperObject = {
 };
 
 const Tag: FC<Props> = ({ className, type, auctionEndTime = '1:52:09', media, value }) => (
-  <div className={cx(styles[type], styles.tag, className, styles[value?.split(' ').join('') || 'default'])}>
+  <div
+    className={cx(
+      styles[type],
+      styles.tag,
+      className,
+      styles[value?.split(' ').join('') || 'default'],
+    )}
+  >
     <img src={media || helperObject[type]} alt="" />
-    <Text color='inherit' className={styles.tagText}>{type !== 'auction' ? value : `${auctionEndTime} left`}</Text>
+    <Text color="inherit" className={styles.tagText}>
+      {type !== 'auction' ? value : `${auctionEndTime} left`}
+    </Text>
   </div>
 );
 

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styles from './styles.module.scss';
 import { Avatar, EllipsisText, Text } from 'components';
-import { IconEth } from 'assets/img';
+import { iconChange } from 'assets/img';
 
 interface IProps {
   index?: number;
@@ -13,7 +13,15 @@ interface IProps {
   profitIncrease?: string | number;
 }
 
-const CollectionCard: FC<IProps> = ({ index, avatar, id, name, price, isVerified = false, profitIncrease }) => {
+const CollectionCard: FC<IProps> = ({
+  index,
+  avatar,
+  id,
+  name,
+  price,
+  isVerified = false,
+  profitIncrease,
+}) => {
   return (
     <li className={styles.collectionCard}>
       <Text color="secondary" weight="bold" size="m">
@@ -35,15 +43,17 @@ const CollectionCard: FC<IProps> = ({ index, avatar, id, name, price, isVerified
           </Text>
         </EllipsisText>
         <Text size="m" className={styles.price}>
-          <IconEth />
+          <img src={iconChange} alt="usd icon" />
           {price}
         </Text>
       </div>
-      {profitIncrease &&
+      {profitIncrease && (
         <div className={styles.profitIncreaseWrapper}>
-          <Text className={styles.profitIncreaseValue} size='m'>{profitIncrease}%</Text>
+          <Text className={styles.profitIncreaseValue} size="m">
+            {profitIncrease}%
+          </Text>
         </div>
-      }
+      )}
     </li>
   );
 };

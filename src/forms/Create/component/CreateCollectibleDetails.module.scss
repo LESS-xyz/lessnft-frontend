@@ -1,29 +1,18 @@
 @import 'src/styles/helpers';
 
 .form {
-  @include flexbox(flex-start, space-between);
-  @include forDesktopBig {
-    flex-direction: column;
-  }
+  @include flexbox(center, space-between);
+  flex-direction: column;
 }
 
 .column {
   width: 50%;
-
-  & + & {
-    margin-left: 32px;
-    @include forDesktopBig {
-      margin-left: 0;
-    }
-  }
 
   @include forDesktopBig {
     width: 100%;
   }
 
   &Upload {
-    position: sticky;
-    top: 120px;
     @include forDesktopBig {
       position: static;
     }
@@ -80,6 +69,10 @@
     video {
       width: 100%;
     }
+  }
+
+  &Auc {
+    margin-bottom: 24px;
   }
 }
 
@@ -199,6 +192,7 @@
 
 .collections {
   margin-top: 32px;
+  overflow: hidden;
 }
 
 .fieldsetRowColumn {
@@ -230,7 +224,7 @@
 
     .priceInput {
       width: 100%;
-      margin-left: 12px;
+      // margin-left: 12px;
     }
   }
 
@@ -323,6 +317,10 @@
   border: 2px solid transparent;
   cursor: pointer;
   @include flexbox;
+
+  & + & {
+    margin-bottom: 24px;
+  }
   &_add {
     border-color: $color-actions-dark-green;
     transition: all 0.2s ease;
@@ -358,7 +356,6 @@
   &Double {
     @include flexbox(center, center);
     flex-direction: column-reverse;
-    gap: 24px;
     transform: translateY(56px);
   }
 }
@@ -376,6 +373,7 @@
 }
 
 .clean {
+  margin-bottom: 12px;
   @include forDesktopBig {
     margin-bottom: 16px;
   }
@@ -397,4 +395,98 @@
 
 .suffix {
   color: $color-neutral-100;
+}
+
+.startEndAuc {
+  @include flexbox(flex-start, space-between);
+  gap: 12px;
+  margin-top: 24px;
+  &Item {
+    width: 100%;
+  }
+  &Text {
+    margin-top: 32px;
+    margin-bottom: 8px;
+    color: $color-neutral-40 !important;
+  }
+}
+.details {
+  margin-top: 16px;
+}
+
+.detail {
+  @include flexbox(center, space-between);
+  border-bottom: 1px solid $color-neutral-10;
+  padding: 16px 0;
+
+  &Icon {
+    border-radius: 50%;
+    background-color: $color-neutral-10;
+    width: 30px;
+    height: 30px;
+    @include flexbox(center, center);
+
+    img {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &Info {
+    @include flexbox;
+    gap: 17px;
+  }
+
+  & + & {
+    margin-top: 16px;
+  }
+
+  &Btn {
+    cursor: pointer;
+  }
+}
+
+.properties {
+  border-radius: $border-radius;
+  border: 1px solid $color-primary;
+  padding: 20px 30px;
+
+  &Wrapper {
+    @include flexbox(center, flex-start);
+    flex-direction: row;
+    margin: 16px 0 32px;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+}
+
+.rankings {
+  margin: 16px 0 32px;
+  border-radius: $border-radius;
+  border: 1px solid $color-primary;
+  padding: 20px 30px;
+  max-width: 400px;
+  width: 100%;
+
+  &Head {
+    @include flexbox(center, space-between);
+  }
+
+  &Bar {
+    margin-top: 6px;
+    height: 11px;
+    background-color: $color-neutral-10;
+    border-radius: $border-radius;
+
+    &Color {
+      height: 11px;
+      border-radius: $border-radius;
+      background-color: $color-primary;
+    }
+  }
+}
+
+.explicit {
+  @include flexbox(center, space-between);
+  margin-top: 32px;
 }

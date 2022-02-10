@@ -3,32 +3,36 @@ import { routes } from 'appConstants';
 import { Button, Logo, Text, TextInput } from 'components';
 import { observer } from 'mobx-react';
 import cn from 'classnames';
-// import { useMst } from 'store';
+import * as yup from 'yup';
 
 import styles from './styles.module.scss';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { userApi } from 'services';
 
 const Footers: React.FC = observer(() => {
   const history = useLocation();
+  const [email, setEmail] = useState('');
+
+  const saveUserEmailToDb = useCallback((address: string) => {
+    if (!address) return;
+    const emailSchema = yup.object().shape({
+      email: yup.string().email().required(),
+    });
+
+    emailSchema.isValid({ email: address }).then((valid) => {
+      if (valid) {
+        userApi.saveEmailToDb(address).then((res) => {
+          if (res.data.id) toast.success('Success!');
+        });
+      } else {
+        toast.error('Not valid email');
+      }
+    });
+  }, []);
 
   const { pathname } = history;
   const [isClassName, setIsClassName] = useState(false);
-  // const { user } = useMst();
-
-  // const accountHelperObject = [
-  //   {
-  //     label: 'Download',
-  //     link: routes.profile.root,
-  //   },
-  //   {
-  //     label: 'Demos',
-  //     link: `${routes.profile.root}/favourite`,
-  //   },
-  //   {
-  //     label: 'Support',
-  //     link: `${routes.profile.root}/myCollectction`,
-  //   },
-  // ];
 
   const stacks = [
     {
@@ -77,22 +81,6 @@ const Footers: React.FC = observer(() => {
               );
             })}
           </div>
-          {/* {user.address && (
-            <div className={styles.linkBlock}>
-              <Text weight="bold" size="m">
-                Info
-              </Text>
-              {accountHelperObject.map(({ label, link }) => {
-                return (
-                  <Link to={link} key={label}>
-                    <Button className={styles.button} color="transparent">
-                      <Text color="lightGray">{label}</Text>
-                    </Button>
-                  </Link>
-                );
-              })}
-            </div>
-          )} */}
           <div className={styles.footerActions}>
             <Text color="black" weight="bold" size="m">
               Join Newsletter
@@ -100,11 +88,20 @@ const Footers: React.FC = observer(() => {
             <Text color="lightGray" size="m">
               Subscribe our newsletter to get more free design course and resource
             </Text>
-            <TextInput isButton placeholder="Enter your email" type="text" />
+            <TextInput
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              isButton
+              placeholder="Enter your email"
+              type="text"
+              onButtonClick={() => saveUserEmailToDb(email)}
+            />
           </div>
         </div>
         <div className={styles.copyrightBlock}>
-          <Text color="gray">Copyright © 2021 Lessnft LLC. All rights reserved</Text>
+          <Text color="gray">
+            Copyright © {new Date().getFullYear()} Lessnft LLC. All rights reserved
+          </Text>
         </div>
       </div>
     </footer>

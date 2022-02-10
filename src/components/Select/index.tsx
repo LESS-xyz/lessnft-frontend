@@ -67,6 +67,7 @@ const Select: FC<Props> = ({
   size = 'm',
   color = 'light',
 }) => {
+
   const Control = useCallback(
     (props: ControlProps<OptionType, boolean>) => (
       <component.Control

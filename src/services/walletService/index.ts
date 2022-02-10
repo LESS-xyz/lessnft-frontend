@@ -1,7 +1,5 @@
 import { ConnectWallet } from '@amfi/connect-wallet';
-import { IConnect, IError } from '@amfi/connect-wallet/dist/interface';
 import BigNumber from 'bignumber.js/bignumber';
-import { Observable } from 'rxjs';
 import { chainsEnum } from 'typings';
 import Web3 from 'web3';
 
@@ -12,6 +10,7 @@ import {
   exchangeAddrs,
 } from '../../config';
 
+const APPROVE_AMOUNT = 90071992000.5474099;
 export class WalletConnect {
   public connectWallet: ConnectWallet;
 
@@ -78,7 +77,7 @@ export class WalletConnect {
     return result;
   }
 
-  public getAccount(): Observable<IConnect | IError> {
+  public getAccount() {
     return this.connectWallet.getAccounts();
   }
 
@@ -173,17 +172,13 @@ export class WalletConnect {
         )
         .call();
 
-      const totalSupply = await this.totalSupply(
-        contracts.params[contractName][is_production ? 'mainnet' : 'testnet'].address,
-        contracts.params[contractName][is_production ? 'mainnet' : 'testnet'].abi,
-        tokenDecimals,
-      );
-
       result =
         result === '0'
           ? null
           : +new BigNumber(result).dividedBy(new BigNumber(10).pow(tokenDecimals)).toString(10);
-      if (result && new BigNumber(result).minus(totalSupply).isPositive()) {
+      // if (result && new BigNumber(result).minus(totalSupply).isPositive()) {
+
+      if (result && new BigNumber(result).minus(APPROVE_AMOUNT).isPositive()) {
         return true;
       }
       return false;
@@ -206,13 +201,18 @@ export class WalletConnect {
 
       const approveSignature = this.encodeFunctionCall(approveMethod, [
         approvedAddress || walletAddress || this.walletAddress,
-        WalletConnect.calcTransactionAmount(90071992000.5474099, tokenDecimals),
+        WalletConnect.calcTransactionAmount(APPROVE_AMOUNT, tokenDecimals),
       ]);
+
+      const gasPrice = await this.connectWallet.currentWeb3().eth.getGasPrice();
 
       return this.sendTransaction({
         from: walletAddress || this.walletAddress,
         to: contracts.params[contractName][is_production ? 'mainnet' : 'testnet'].address,
         data: approveSignature,
+        gasPrice: new BigNumber(gasPrice).multipliedBy(
+          localStorage.lessnft_nft_chainName === 'Polygon' ? 3 : 1,
+        ),
       });
     } catch (error) {
       return error;

@@ -16,6 +16,8 @@ interface IDropdownProps {
   isWritable?: boolean;
   name?: string;
   suffix?: string;
+  headClassName?: string;
+  bodyClassName?: string;
 }
 
 const Dropdown: FC<IDropdownProps> = ({
@@ -27,6 +29,8 @@ const Dropdown: FC<IDropdownProps> = ({
   isWritable,
   name,
   suffix = '',
+  headClassName,
+  bodyClassName,
 }) => {
   const [visible, setVisible] = useState(false);
 
@@ -42,7 +46,7 @@ const Dropdown: FC<IDropdownProps> = ({
           onKeyDown={() => {}}
           tabIndex={0}
           role="button"
-          className={styles.head}
+          className={cn(styles.head, headClassName)}
           onClick={() => setVisible(!visible)}
         >
           {isWritable ? (
@@ -53,7 +57,7 @@ const Dropdown: FC<IDropdownProps> = ({
           <img alt="open dropdown" src={iconArrowDown} className={styles.arrow} />
         </div>
         {!isWithImage ? (
-          <div className={styles.body}>
+          <div className={cn(styles.body, bodyClassName)}>
             {typeof options[0] === 'string'
               ? options.map((option: string) => (
                   <div
@@ -97,7 +101,7 @@ const Dropdown: FC<IDropdownProps> = ({
                 ))}
           </div>
         ) : (
-          <div className={styles.body}>
+          <div className={cn(styles.body, bodyClassName)}>
             {options.map((option: any) => (
               <div
                 onKeyDown={() => {}}

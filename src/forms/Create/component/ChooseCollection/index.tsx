@@ -11,6 +11,8 @@ import { CreateCollection } from '../../../index';
 import carouselBreakpointsConfig from './carouselBreakpointsConfig';
 
 import styles from './ChooseCollection.module.scss';
+import { useHistory } from 'react-router-dom';
+import { routes } from 'appConstants';
 
 interface IProps {
   isSingle: boolean;
@@ -39,7 +41,7 @@ const ChooseCollection: React.FC<IProps> = observer(
     addToCollection,
   }) => {
     const { user } = useMst();
-
+    const history = useHistory();
     const [collections, setCollections] = useState<ICollection[]>([]);
     const [defaultCollectionId, setDefaultCollectionId] = useState(0);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -57,7 +59,7 @@ const ChooseCollection: React.FC<IProps> = observer(
       userApi
         .getSingleCollections()
         .then(({ data }) => {
-          const newCollections = data.collections.filter((coll: any) => {
+          const newCollections = data.results.filter((coll: any) => {
             if (isSingle) {
               return coll.standart === 'ERC721';
             }
@@ -78,8 +80,8 @@ const ChooseCollection: React.FC<IProps> = observer(
         .finally(() => setIsRefresh(false));
     }, [isSingle, setIsRefresh]);
 
-    const handleOpenModal = () => {
-      setIsModalVisible(true);
+    const handleCreateCOllection = () => {
+      history.push(isSingle ? routes.create.collection.single : routes.create.collection.multiple);
     };
 
     useEffect(() => {
@@ -105,8 +107,8 @@ const ChooseCollection: React.FC<IProps> = observer(
         {/* TODO: убрать выезды за layout */}
         <Carousel hideArrows slidesToShow={3} responsive={carouselBreakpointsConfig}>
           <div
-            onClick={handleOpenModal}
-            onKeyDown={handleOpenModal}
+            onClick={handleCreateCOllection}
+            onKeyDown={handleCreateCOllection}
             role="button"
             tabIndex={0}
             className={cn(styles.card, !activeCollectionId && styles.active)}

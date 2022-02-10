@@ -60,7 +60,7 @@ const ChangePrice: React.FC<IChangePriceProps> = ({ className }) => {
           className={cn('button', styles.button)}
           onClick={changePrice}
           isFullWidth
-          color="blue"
+          // color="blue"
         >
           Change Price
         </Button>

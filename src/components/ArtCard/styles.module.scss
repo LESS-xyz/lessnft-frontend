@@ -5,6 +5,8 @@
   border: 1px solid $color-neutral-20;
   width: 100%;
   max-width: 500px;
+  min-width: 250px;
+  max-height: 500px;
   margin: 0 auto;
   height: 100%;
   border-radius: $border-radius;
@@ -30,7 +32,7 @@
 
   @include flexbox(center, flex-start);
 
-  &::-webkit-scrollbar{
+  &::-webkit-scrollbar {
     height: 0;
   }
 
@@ -51,19 +53,41 @@
   overflow: hidden;
   flex: 0 1 80%;
   transition: $transition;
+  width: 100%;
+  height: 100%;
+  border-radius: $border-radius $border-radius 0 0;
+  @include flexbox(flex-start, center);
 
-  & > img {
+  .Padded,
+  .Contained {
+    object-fit: contain;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    align-self: center;
+  }
+
+  .Covered {
+    object-fit: cover;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: 50% 50%;
-    transition: .1s linear;
-    border-radius: $border-radius $border-radius 0 0;
-
-    @include forDesktopSm{
-      object-fit: contain;
-    }
+    max-width: 100%;
+    min-height: 300px;
   }
+
+  // & > img {
+  //   width: 100%;
+  //   height: 100%;
+  //   object-fit: cover;
+  //   object-position: 50% 50%;
+  //   transition: 0.1s linear;
+  //   border-radius: $border-radius $border-radius 0 0;
+
+  //   @include forDesktopSm {
+  //     object-fit: contain;
+  //   }
+  // }
 }
 
 .mainImageWrapperMedium {
@@ -126,11 +150,12 @@
 
 .artCardAuthor {
   margin-left: 8px;
+  margin-right: 8px;
 
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 200px;
+  max-width: 150px;
 }
 
 .artCardHeart {

@@ -2,14 +2,14 @@ import { FC, useState } from 'react';
 import { IconFilter, profile_avatar_example } from 'assets/img';
 import cn from 'classnames';
 import { ActivityItem, Button, H2, H3, Loader, Text } from 'components';
+import { useFetchActivity } from 'hooks';
 import { observer } from 'mobx-react';
 import moment from 'moment';
+import { useMst } from 'store';
 
 import Filters from './Filters';
 
 import styles from './Activity.module.scss';
-import { useFetchActivity } from 'hooks';
-import { useMst } from 'store';
 
 const filters = [
   'Sales',

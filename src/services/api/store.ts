@@ -1,5 +1,5 @@
 import axios from 'core/axios';
-import { TNullable } from 'typings';
+import { INotableDrop, TNullable } from 'typings';
 import { IGetSearchResultParams } from '../../typings/api/search';
 
 export default {
@@ -68,34 +68,8 @@ export default {
     axios.get(`store/owned/${address}/${page}/?network=${localStorage.lessnft_nft_chainName}`),
   getUserCollections: (address: string, page: number) =>
     axios.get(`store/collections/${address}/${page}/`),
-  /* getSearchResults: (queries: any, text?: string) => {
-    const queriesCopy = { ...queries };
-    switch (queriesCopy.is_verified) {
-      case 'All':
-        delete queriesCopy.is_verified;
-        break;
-      case 'verified':
-        queriesCopy.is_verified = 'true';
-        break;
-      case 'unverified':
-        queriesCopy.is_verified = 'false';
-        break;
-      default:
-        break;
-    }
-    if (queriesCopy.tags === 'All items') delete queriesCopy.tags;
-    let query = `?network=${localStorage.lessnft_nft_chainName}`;
-    Object.keys(queriesCopy).forEach((key) => {
-      if (queriesCopy[key] || queriesCopy[key] === false || queriesCopy[key] === 0) {
-        query = query.concat(`&${key}=${queriesCopy[key]}`);
-      }
-    });
-    return axios.post(`/store/search/${query}`, {
-      text: text || '',
-    });
-  },*/
   getSearchResults: ({
-    sort,
+    type,
     order_by,
     owner,
     on_sale,
@@ -106,28 +80,42 @@ export default {
     max_price,
     page,
     creator,
+    has_bids = false,
+    bids_by,
+    on_auc_sale,
+    on_timed_auc_sale,
+    min_price,
+    network,
+    collections,
+    properties,
+    rankings,
+    stats,
   }: IGetSearchResultParams) => {
-    return axios.post(
-      `/store/search/`,
-      {
-        text: text || '',
+    return axios.get(`/store/search/`, {
+      params: {
+        network: network || 'undefined',
+        type,
+        order_by,
+        owner,
+        on_sale,
+        currency,
+        is_verified,
+        page,
+        creator,
+        tags,
+        ...(has_bids && {has_bids}),
+        bids_by,
+        collections,
+        min_price,
+        max_price,
+        text,
+        on_auc_sale,
+        on_timed_auc_sale,
+        ...(properties !== '{}' && { properties }),
+        ...(rankings !== '{}' && { rankings }),
+        ...(stats !== '{}' && { stats }),
       },
-      {
-        params: {
-          network: localStorage.lessnft_nft_chainName || 'undefined',
-          sort,
-          order_by,
-          owner,
-          on_sale,
-          currency,
-          is_verified,
-          max_price,
-          page,
-          creator,
-          tags,
-        },
-      },
-    );
+    });
   },
   getFee: (currency: TNullable<string>) =>
     axios.get(
@@ -149,10 +137,20 @@ export default {
     axios.post(`/store/end_auction/${id}/?network=${localStorage.lessnft_nft_chainName}`, {
       token: localStorage.dds_token,
     }),
-  putOnSale: (tokenId: number, price?: TNullable<number>, selling?: boolean) => {
+  putOnSale: (
+    tokenId: number,
+    price: TNullable<number>,
+    selling: boolean,
+    currency: string,
+    start_auction: string,
+    end_auction: string,
+  ) => {
     const data: any = {
       selling: true,
       price,
+      currency,
+      start_auction,
+      end_auction,
     };
     if (!selling) {
       data.minimal_bid = price;
@@ -173,11 +171,17 @@ export default {
       message,
       token,
     }),
-  trackTransaction: (tx_hash: string, token: string | number, seller_id: string | number) => {
+  trackTransaction: (
+    tx_hash: string,
+    token: string | number,
+    seller_id: string | number,
+    amount: number,
+  ) => {
     const data: any = {
       tx_hash,
       token,
       ownership: seller_id,
+      amount,
     };
     if (!seller_id) delete data.ownership;
     return axios.post(
@@ -185,19 +189,15 @@ export default {
       data,
     );
   },
-  removeFromSale: (id: string | number, price?: null, minimal_bid?: null) => {
-    const data: {
-      selling: false;
-      price?: null;
-      minimal_bid?: null;
-    } = {
+  removeFromSale: (id: string | number) => {
+    const data = {
+      id,
+      price: null,
+      minimal_bid: null,
+      currency: 'less',
+      start_auc: 0,
+      end_auc: 0,
       selling: false,
-    };
-    if (price === null) {
-      data.price = price;
-    }
-    if (minimal_bid === null) {
-      data.minimal_bid = minimal_bid;
     }
     return axios.patch(`/store/${id}/?network=${localStorage.lessnft_nft_chainName}`, data);
   },
@@ -219,9 +219,16 @@ export default {
   getRelated: (id: string | number) =>
     axios.get(`store/related/${id}/?network=${localStorage.lessnft_nft_chainName}`),
   setCollectionCover: (data: any) => {
-    return axios.post(
-      `/store/set_cover/?network=${localStorage.lessnft_nft_chainName}`,
-      data,
-    );
+    return axios.post(`/store/set_cover/?network=${localStorage.lessnft_nft_chainName}`, data);
+  },
+  getTrendingCollections: (tag: string) =>
+    axios.get(`/store/trending_collections/`, {
+      params: {
+        network: localStorage.lessnft_nft_chainName || '',
+        tag,
+      },
+    }),
+  getNotableDrops: (): Promise<{ data: Array<INotableDrop> }> => {
+    return axios.get('/store/drops/');
   },
 };

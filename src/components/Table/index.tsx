@@ -13,7 +13,7 @@ import {
 
 import styles from './styles.module.scss';
 
-const Table: FC<TableProps> = ({ columns, data, currency }) => {
+const Table: FC<TableProps> = ({ columns, data }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     columns,
     data,
@@ -58,7 +58,7 @@ const Table: FC<TableProps> = ({ columns, data, currency }) => {
                       <td className={styles.cell} {...cell.getCellProps()}>
                         <TradingHistoryPrice
                           type={cellData.method as TEventType}
-                          currency={currency}
+                          currency={cellData.currency}
                           amount={cellData.price as string | number}
                         />
                       </td>

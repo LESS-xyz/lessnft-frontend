@@ -1,7 +1,6 @@
 /* eslint-disable */
-import React, { FC, useEffect, useRef, useState } from 'react';
-import { Redirect, useHistory, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import { routes } from 'appConstants';
 import cx from 'classnames';
 import { ArtCard, Control, GiantCard, H3, Text } from 'components';
@@ -13,9 +12,12 @@ import { storeApi } from 'services/api';
 import { useMst } from 'store';
 import { ICurrency, INft, TNullable } from 'typings';
 
-import PriceHistory from './PriceHistory';
-
 import styles from './styles.module.scss';
+import PropertiesSection from './PropertiesSection';
+import LevelsSection from './LevelsSection';
+import StatsSection from './StatsSection';
+import TradingHistorySection from './TradingHistorySection';
+import PriceHistorySection from './PriceHistorySection';
 
 const breadcrumbs = [
   {
@@ -79,34 +81,46 @@ const DetailArtwork: FC<Props> = observer(({ className }) => {
     sell.putOnSale.isSuccess,
   ]);
 
-  if (
-    nft?.network.name !== localStorage.lessnft_nft_chainName &&
-    !Object.is(localStorage.lessnft_nft_chainName, undefined) &&
-    !Object.is(nft, null)
-  ) {
-    toast.error(`Unsupported chain. (Connect to ${nft?.network.name} to see "${nft?.name}")`);
-    return <Redirect to="/" />;
-  }
+  const isNftHasStats = useMemo(() => {
+    if (nft?.stats && nft.stats.length > 0) return true;
+    return false;
+  }, [nft]);
+
+  const isNftHasLevels = useMemo(() => {
+    if (nft?.rankings && nft.rankings.length > 0) return true;
+    return false;
+  }, [nft]);
+
+  const isNftHasProperties = useMemo(() => {
+    return Object.keys(nft?.properties || {}).length > 0;
+  }, [nft]);
 
   return (
     <div className={cx(styles.detailArtwork, className)}>
       <div className={styles.detailArtworkContent}>
         <Control item={breadcrumbs} />
         <GiantCard name={nft?.name || ''} isFetching={isFetching} nft={nft} onUpdateNft={getItem} />
-        <PriceHistory
-          tokenId={id}
-          history={nft?.history || []}
-          currency={nft?.currency as ICurrency}
-        />
+        <div
+          className={cx(styles.properties, {
+            [styles.onlyHistory]: !isNftHasLevels && !isNftHasProperties && !isNftHasStats,
+          })}
+        >
+          <div className={styles.propsSections}>
+            {isNftHasProperties && <PropertiesSection properties={nft?.properties || {}} />}
+            {isNftHasLevels && <LevelsSection levels={nft?.rankings || []} />}
+            {isNftHasStats && <StatsSection stats={nft?.stats || []} />}
+          </div>
+          <div className={styles.history}>
+            <TradingHistorySection
+              history={nft?.history || []}
+              currency={nft?.currency as ICurrency}
+            />
+          </div>
+        </div>
+        <PriceHistorySection tokenId={id} currency={nft?.currency as ICurrency} />
+
         <div className={styles.relatedArtwork}>
           <H3>Related Artwork</H3>
-          {/* <LoadMore
-            itemsLength={nftCards.length}
-            isLoading={isLoading}
-            currentPage={page}
-            allPages={allPages}
-            handleLoadMore={handleLoadMore}
-          > */}
           {Array.isArray(nftCards) && nftCards.length ? (
             <div ref={wrapRef} className={styles.artCardsWrapper}>
               <GridLayer
@@ -132,6 +146,7 @@ const DetailArtwork: FC<Props> = observer(({ className }) => {
                       creator: { id: authorId },
                       tags,
                       like_count: likesNumber,
+                      collection,
                       // currency: { symbol: asset = '' },
                     } = art;
                     const asset = art.currency?.symbol ?? '';
@@ -139,6 +154,7 @@ const DetailArtwork: FC<Props> = observer(({ className }) => {
                       price || (highest_bid && highest_bid.amount) || minimal_bid || 0;
                     return (
                       <ArtCard
+                        type={collection?.display_theme}
                         key={`nft_card_${art.id}`}
                         className={styles.artCard}
                         artId={artId}
@@ -162,7 +178,6 @@ const DetailArtwork: FC<Props> = observer(({ className }) => {
               There are no artowrks in this collection yet
             </Text>
           )}
-          {/* </LoadMore> */}
         </div>
       </div>
     </div>
